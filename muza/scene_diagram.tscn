@@ -1,0 +1,296 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdde6cxjb1uqc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3vqsj"]
+bg_color = Color(0.502868, 0.209406, 0.367191, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xq5de"]
+bg_color = Color(0.329158, 0.329158, 0.329158, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nq2vk"]
+bg_color = Color(0.87451, 0.415686, 0.329412, 0.662745)
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85k7i"]
+bg_color = Color(0.501961, 0.521569, 0.368627, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="SceneDiagram" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GraphEdit" type="GraphEdit" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+scroll_offset = Vector2(-40, -40)
+
+[node name="Muza" type="GraphNode" parent="GraphEdit"]
+layout_mode = 0
+offset_left = 657.0
+offset_top = 107.0
+offset_right = 873.0
+offset_bottom = 348.0
+mouse_filter = 1
+theme_override_styles/titlebar = SubResource("StyleBoxFlat_3vqsj")
+position_offset = Vector2(617, 67)
+resizable = true
+title = "                    MuZa"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color(1, 1, 1, 1)
+slot/2/left_icon = null
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color(1, 1, 1, 1)
+slot/2/right_icon = null
+slot/2/draw_stylebox = true
+slot/3/left_enabled = false
+slot/3/left_type = 0
+slot/3/left_color = Color(1, 1, 1, 1)
+slot/3/left_icon = null
+slot/3/right_enabled = false
+slot/3/right_type = 0
+slot/3/right_color = Color(1, 1, 1, 1)
+slot/3/right_icon = null
+slot/3/draw_stylebox = true
+
+[node name="BallSpawner" type="GraphNode" parent="GraphEdit/Muza"]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 35.0
+offset_right = 198.0
+offset_bottom = 82.0
+mouse_filter = 1
+theme_override_styles/titlebar = SubResource("StyleBoxFlat_xq5de")
+position_offset = Vector2(132, 86)
+resizable = true
+title = "BallSpawner"
+
+[node name="BallSwapper" type="GraphNode" parent="GraphEdit/Muza"]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 84.0
+offset_right = 198.0
+offset_bottom = 131.0
+mouse_filter = 1
+theme_override_styles/titlebar = SubResource("StyleBoxFlat_xq5de")
+position_offset = Vector2(132, 86)
+resizable = true
+title = "BallSwapper"
+
+[node name="BallShooter" type="GraphNode" parent="GraphEdit/Muza"]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 133.0
+offset_right = 198.0
+offset_bottom = 180.0
+mouse_filter = 1
+theme_override_styles/titlebar = SubResource("StyleBoxFlat_xq5de")
+position_offset = Vector2(132, 86)
+resizable = true
+title = "BallShooter"
+
+[node name="Rotator" type="GraphNode" parent="GraphEdit/Muza"]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 182.0
+offset_right = 198.0
+offset_bottom = 229.0
+mouse_filter = 1
+theme_override_styles/titlebar = SubResource("StyleBoxFlat_xq5de")
+position_offset = Vector2(132, 86)
+resizable = true
+title = "Rotator"
+
+[node name="Ball" type="GraphNode" parent="GraphEdit"]
+offset_left = 195.0
+offset_top = 93.0
+offset_right = 399.0
+offset_bottom = 334.0
+mouse_filter = 1
+theme_override_styles/titlebar = SubResource("StyleBoxFlat_nq2vk")
+position_offset = Vector2(155, 53)
+resizable = true
+title = "                    BALL"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color(1, 1, 1, 1)
+slot/2/left_icon = null
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color(1, 1, 1, 1)
+slot/2/right_icon = null
+slot/2/draw_stylebox = true
+
+[node name="Color" type="GraphNode" parent="GraphEdit/Ball"]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 35.0
+offset_right = 186.0
+offset_bottom = 82.0
+mouse_filter = 1
+theme_override_styles/titlebar = SubResource("StyleBoxFlat_xq5de")
+position_offset = Vector2(132, 86)
+resizable = true
+title = "Color"
+
+[node name="PathFollow" type="GraphNode" parent="GraphEdit/Ball"]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 84.0
+offset_right = 186.0
+offset_bottom = 178.0
+mouse_filter = 1
+theme_override_styles/titlebar = SubResource("StyleBoxFlat_xq5de")
+position_offset = Vector2(132, 86)
+resizable = true
+title = "PathFollow"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+
+[node name="Hole" type="GraphNode" parent="GraphEdit/Ball/PathFollow"]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 35.0
+offset_right = 150.0
+offset_bottom = 82.0
+mouse_filter = 1
+theme_override_styles/titlebar = SubResource("StyleBoxFlat_xq5de")
+position_offset = Vector2(132, 86)
+resizable = true
+title = "Hole"
+
+[node name="CoinGrab" type="GraphNode" parent="GraphEdit/Ball"]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 180.0
+offset_right = 186.0
+offset_bottom = 227.0
+mouse_filter = 1
+theme_override_styles/titlebar = SubResource("StyleBoxFlat_xq5de")
+position_offset = Vector2(132, 86)
+resizable = true
+title = "CoinGrab"
+
+[node name="Level" type="GraphNode" parent="GraphEdit"]
+offset_left = 441.0
+offset_top = 336.0
+offset_right = 657.0
+offset_bottom = 528.0
+mouse_filter = 1
+theme_override_styles/titlebar = SubResource("StyleBoxFlat_85k7i")
+position_offset = Vector2(401, 296)
+resizable = true
+title = "                    Level"
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color(1, 1, 1, 1)
+slot/2/left_icon = null
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color(1, 1, 1, 1)
+slot/2/right_icon = null
+slot/2/draw_stylebox = true
+
+[node name="Coin" type="GraphNode" parent="GraphEdit/Level"]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 35.0
+offset_right = 198.0
+offset_bottom = 82.0
+mouse_filter = 1
+theme_override_styles/titlebar = SubResource("StyleBoxFlat_xq5de")
+position_offset = Vector2(132, 86)
+resizable = true
+title = "Coin"
+
+[node name="Background" type="GraphNode" parent="GraphEdit/Level"]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 84.0
+offset_right = 198.0
+offset_bottom = 131.0
+mouse_filter = 1
+theme_override_styles/titlebar = SubResource("StyleBoxFlat_xq5de")
+position_offset = Vector2(132, 86)
+resizable = true
+title = "Background"
+
+[node name="Foreground" type="GraphNode" parent="GraphEdit/Level"]
+layout_mode = 2
+offset_left = 18.0
+offset_top = 133.0
+offset_right = 198.0
+offset_bottom = 180.0
+mouse_filter = 1
+theme_override_styles/titlebar = SubResource("StyleBoxFlat_xq5de")
+position_offset = Vector2(132, 86)
+resizable = true
+title = "Foreground"
