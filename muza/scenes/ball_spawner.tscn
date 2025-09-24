@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://g7tlfbm48buo"]
+
+[ext_resource type="Script" uid="uid://b6ti3th78lweq" path="res://scripts/ball_spawner.gd" id="1_vml06"]
+
+[node name="BallSpawner" type="Node"]
+script = ExtResource("1_vml06")
+randomize_color = true

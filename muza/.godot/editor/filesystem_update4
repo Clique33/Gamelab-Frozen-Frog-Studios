@@ -1,0 +1,11 @@
+res://node_2d.tscn
+res://scenes/Ball.tscn
+res://scripts/ball.gd
+res://scenes/ball_spawner.tscn
+res://scenes/ball_spawner.gd
+res://scripts/ball_spawner.gd
+res://scenes/ball.tscn
+res://scenes/ball_path.tscn
+res://scripts/ball_path.gd
+res://resources/ball_path.tres
+res://resources/test_curve_of_ball_path.tres
