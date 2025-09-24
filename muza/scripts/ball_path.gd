@@ -24,8 +24,6 @@ func put_ball_on_path() -> void:
 	path_follow_for_spawned_ball.loop = false
 	path_follow_for_spawned_ball.add_child(ball_spawner.spawn())
 
-
-
 func _on_begining_checker_area_entered(area: Area2D) -> void:
 	_can_spawn = false
 

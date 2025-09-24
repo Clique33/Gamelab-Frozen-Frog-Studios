@@ -10,7 +10,7 @@ radius = 20.025
 script = ExtResource("1_cxlvu")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.05, 0.05)
+scale = Vector2(0.03, 0.03)
 texture = ExtResource("2_f7cbr")
 
 [node name="Area2D" type="Area2D" parent="."]
