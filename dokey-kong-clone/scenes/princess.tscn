@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddniotgbpympo"]
+
+[ext_resource type="Texture2D" uid="uid://djy274nacignx" path="res://assets/Arcade - Donkey Kong - Miscellaneous - Characters and Objects.png" id="1_o4716"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6t68o"]
+size = Vector2(16, 26)
+
+[node name="Princess" type="Node2D"]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_o4716")
+region_enabled = true
+region_rect = Rect2(0.556215, 140.669, 16.9751, 32.6444)
+
+[node name="CollisionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea"]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_6t68o")
