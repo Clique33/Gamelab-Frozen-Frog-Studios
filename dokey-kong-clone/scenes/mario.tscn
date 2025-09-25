@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dt7bpywp70act"]
+[gd_scene load_steps=4 format=3 uid="uid://dt7bpywp70act"]
 
+[ext_resource type="Script" uid="uid://cy0yqo1u31mnj" path="res://scripts/mario.gd" id="1_bvgp0"]
 [ext_resource type="Texture2D" uid="uid://djy274nacignx" path="res://assets/Arcade - Donkey Kong - Miscellaneous - Characters and Objects.png" id="1_keuod"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bvgp0"]
@@ -7,6 +8,8 @@ radius = 4.0
 height = 16.0
 
 [node name="Mario" type="CharacterBody2D"]
+script = ExtResource("1_bvgp0")
+speed = 70
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
