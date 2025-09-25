@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dt7bpywp70act"]
+
+[ext_resource type="Texture2D" uid="uid://djy274nacignx" path="res://assets/Arcade - Donkey Kong - Miscellaneous - Characters and Objects.png" id="1_keuod"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bvgp0"]
+radius = 4.0
+height = 16.0
+
+[node name="Mario" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_keuod")
+region_enabled = true
+region_rect = Rect2(0.877191, 0.994611, 16.1032, 16.1032)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_bvgp0")
