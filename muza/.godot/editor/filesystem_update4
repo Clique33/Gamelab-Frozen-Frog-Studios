@@ -1,4 +1,5 @@
-res://scenes/frog.tscn
-res://scripts/ball_spawner.gd
-res://scripts/frog.gd
 res://scenes/ball.tscn
+res://scenes/frog.tscn
+res://scripts/frog.gd
+res://scripts/ball.gd
+res://test_scene.tscn
