@@ -7,7 +7,7 @@ class_name Frog
 
 func _ready() -> void:
 	ready_ball_position.add_child(ball_spawner.spawn())
-	stand_by_ball_position.add_child(ball_spawner.spawn_except(ready_ball_position.get_child(0).color))
+	stand_by_ball_position.add_child(ball_spawner.spawn())
 
 func _physics_process(delta: float) -> void:
 	look_at(get_global_mouse_position())
@@ -36,4 +36,4 @@ func shoot(at_point : Vector2) -> void:
 	mouth_ball.be_shot(at_point)
 	
 	give_ball(stand_by_ball_position,ready_ball_position)
-	stand_by_ball_position.add_child(ball_spawner.spawn_except(ready_ball_position.get_child(0).color))
+	stand_by_ball_position.add_child(ball_spawner.spawn())

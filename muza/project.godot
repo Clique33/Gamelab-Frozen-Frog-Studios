@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="MuZa"
-run/main_scene="res://node_2d.tscn"
+run/main_scene="uid://cqfo4qc5w05jk"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 

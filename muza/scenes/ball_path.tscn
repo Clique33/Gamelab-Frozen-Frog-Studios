@@ -9,12 +9,11 @@ _data = {
 }
 point_count = 4
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_adnxe"]
-radius = 20.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_hdgg0"]
+radius = 11.0
 
 [node name="BallPath" type="Node2D"]
 script = ExtResource("1_adnxe")
-speed = 40
 
 [node name="Path" type="Path2D" parent="."]
 curve = SubResource("Curve2D_hdgg0")
@@ -23,8 +22,7 @@ curve = SubResource("Curve2D_hdgg0")
 
 [node name="BeginingChecker" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BeginingChecker"]
-shape = SubResource("CircleShape2D_adnxe")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="BeginingChecker"]
+shape = SubResource("CircleShape2D_hdgg0")
 
-[connection signal="area_entered" from="BeginingChecker" to="." method="_on_begining_checker_area_entered"]
 [connection signal="area_exited" from="BeginingChecker" to="." method="_on_begining_checker_area_exited"]
