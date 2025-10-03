@@ -19,6 +19,7 @@ script = ExtResource("1_adnxe")
 curve = SubResource("Curve2D_hdgg0")
 
 [node name="BallSpawner" parent="." instance=ExtResource("1_qps0i")]
+ball_owner = 1
 
 [node name="BeginingChecker" type="Area2D" parent="."]
 
