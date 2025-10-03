@@ -8,7 +8,7 @@
 script = ExtResource("1_nd71p")
 
 [node name="BallPath" parent="." instance=ExtResource("1_j8ivh")]
-speed = 200
+end_of_level_speed = 500
 
 [node name="Frog" parent="." instance=ExtResource("2_nd71p")]
 position = Vector2(488, 271)
