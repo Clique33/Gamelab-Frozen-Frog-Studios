@@ -7,8 +7,6 @@ class_name BallSpawner
 @export var ball_owner : Ball.Owner
 
 var ball_scene : PackedScene = preload("res://scenes/ball.tscn")
-var _is_ready_to_start_spawing : bool = false
-var _is_on_cooldown : bool = false
 
 ##Spawn a random color ball
 func spawn() -> Ball:

@@ -17,7 +17,7 @@ func _ready() -> void:
 	stand_by_ball_position.add_child(ball_spawner.spawn())
 	shot_cooldown_timer.wait_time = shot_cooldown
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	look_at(get_global_mouse_position())
 	if Input.is_action_just_released("swap_balls"):
 		swap_balls()
