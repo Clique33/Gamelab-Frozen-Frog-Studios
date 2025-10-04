@@ -4,4 +4,4 @@ res://scenes/test_scene.tscn
 res://scenes/ball_path.tscn
 res://scenes/ball_spawner.tscn
 res://scripts/ball_path.gd
-res://scripts/ball.gd
+res://scripts/frog.gd

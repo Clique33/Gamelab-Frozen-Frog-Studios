@@ -4,18 +4,25 @@ class_name Frog
 @onready var ready_ball_position: Node2D = $ReadyBallPosition
 @onready var stand_by_ball_position: Node2D = $StandByBallPosition
 @onready var ball_spawner: BallSpawner = $BallSpawner
+@onready var shot_cooldown_timer: Timer = $ShotCooldownTimer
+
+@export_range(0.05,10,0.01) var shot_cooldown : float = 0.001:
+	set(value):
+		shot_cooldown = value
+		if shot_cooldown_timer:
+			shot_cooldown_timer.wait_time = shot_cooldown
 
 func _ready() -> void:
 	ready_ball_position.add_child(ball_spawner.spawn())
 	stand_by_ball_position.add_child(ball_spawner.spawn())
+	shot_cooldown_timer.wait_time = shot_cooldown
 
 func _physics_process(delta: float) -> void:
 	look_at(get_global_mouse_position())
 	if Input.is_action_just_released("swap_balls"):
 		swap_balls()
-	if Input.is_action_just_released("shoot"):
+	if shot_cooldown_timer.is_stopped() and Input.is_action_just_released("shoot"):
 		shoot(get_global_mouse_position())
-
 
 func give_ball(from_node : Node, to_node : Node) -> void:
 	var ball : Ball = from_node.get_child(0)
@@ -26,7 +33,6 @@ func swap_balls() -> void:
 	give_ball(ready_ball_position,stand_by_ball_position)
 	give_ball(stand_by_ball_position,ready_ball_position)
 
-	
 func shoot(at_point : Vector2) -> void:
 	var mouth_ball : Ball = ready_ball_position.get_child(0)
 	var original_position : Vector2 = mouth_ball.global_position
@@ -34,6 +40,7 @@ func shoot(at_point : Vector2) -> void:
 	get_parent().add_child(mouth_ball)
 	mouth_ball.global_position = original_position
 	mouth_ball.be_shot(at_point)
-	
+	shot_cooldown_timer.start()
+
 	give_ball(stand_by_ball_position,ready_ball_position)
 	stand_by_ball_position.add_child(ball_spawner.spawn())

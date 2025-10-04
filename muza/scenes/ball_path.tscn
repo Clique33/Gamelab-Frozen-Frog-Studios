@@ -14,6 +14,7 @@ radius = 11.0
 
 [node name="BallPath" type="Node2D"]
 script = ExtResource("1_adnxe")
+spacing_between_spawn = 25.0
 
 [node name="Path" type="Path2D" parent="."]
 curve = SubResource("Curve2D_hdgg0")
@@ -25,5 +26,3 @@ ball_owner = 1
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="BeginingChecker"]
 shape = SubResource("CircleShape2D_hdgg0")
-
-[connection signal="area_exited" from="BeginingChecker" to="." method="_on_begining_checker_area_exited"]
