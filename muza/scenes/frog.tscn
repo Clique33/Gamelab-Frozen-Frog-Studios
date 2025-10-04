@@ -29,3 +29,7 @@ position = Vector2(26, 0)
 
 [node name="StandByBallPosition" type="Node2D" parent="."]
 position = Vector2(-26, 0)
+
+[node name="ShotCooldownTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
