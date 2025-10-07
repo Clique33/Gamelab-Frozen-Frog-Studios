@@ -71,7 +71,7 @@ func spawn_ball_at_begining():
 	var new_ball : Ball = ball_spawner.spawn()
 	new_ball.connect("ball_hit",_on_path_ball_hit)
 	path_follow_for_spawned_ball.add_child(new_ball)
-	handle_new_ball_entered_path(new_ball)
+	handle_new_ball_entered_path()
 
 func put_ball_on_path_follow(ball : Ball, path_follow : PathFollow2D, current_progress : float):
 	ball.get_parent().remove_child(ball)
@@ -96,9 +96,9 @@ func put_ball_on_path(new_ball : Ball, after_ball : Ball) -> void:
 							after_ball.get_parent().progress)
 	
 	position_ball_on_path(new_ball, after_ball.global_position)
-	handle_new_ball_entered_path(new_ball)
+	handle_new_ball_entered_path()
 
-func handle_new_ball_entered_path(new_ball : Ball):
+func handle_new_ball_entered_path():
 	number_of_balls_in_path = path.get_child_count()
 	last_index_stopped += 1
 	
