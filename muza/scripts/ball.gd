@@ -15,9 +15,17 @@ signal ball_left(path_ball, frog_ball)
 
 var ball_owner : Owner
 var _is_shot : bool = false
+var _previous_position : Vector2
 
 func _physics_process(_delta: float) -> void:
+	_previous_position = global_position
 	move_and_slide()
+	#queue_redraw()
+
+#func _draw() -> void:
+	#var base : Vector2 = _previous_position.direction_to(global_position)*1000
+	#draw_line(global_position,base + global_position,Color.BLACK)
+	#draw_circle(base + global_position,5,Color.BLACK)
 
 func be_shot(at_point : Vector2) -> void:
 	if _is_shot:
