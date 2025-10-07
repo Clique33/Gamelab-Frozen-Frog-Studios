@@ -27,11 +27,8 @@ shape = SubResource("CircleShape2D_hdgg0")
 
 [node name="BallSpawner" parent="." instance=ExtResource("1_qps0i")]
 ball_owner = 1
-max_spawned_balls = 20
 
 [node name="BallChecker" type="Node" parent="." node_paths=PackedStringArray("path")]
 script = ExtResource("3_adnxe")
 path = NodePath("../Path")
 metadata/_custom_type_script = "uid://es56jq0esbp8"
-
-[connection signal="spawner_reached_end" from="BallSpawner" to="." method="_on_ball_spawner_spawner_reached_end"]

@@ -7,8 +7,6 @@ enum Owner{FROG, PATH}
 signal ball_hit(path_ball, frog_ball)
 signal ball_left(path_ball, frog_ball)
 
-@onready var speed_label: Label = $speedLabel
-
 @export var shot_speed : int = 500
 @export var color : Colors = Colors.YELLOW:
 	set(value):
@@ -19,7 +17,6 @@ var ball_owner : Owner
 var _is_shot : bool = false
 
 func _physics_process(_delta: float) -> void:
-	speed_label.global_position = global_position
 	move_and_slide()
 
 func be_shot(at_point : Vector2) -> void:
