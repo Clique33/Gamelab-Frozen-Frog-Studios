@@ -16,10 +16,12 @@ class_name BallPath
 @export_category("Spacing")
 @export var spacing_between_spawn : float = 10
 
-var number_of_balls_in_path : int = 0
 var _can_spawn : bool = true
 var _level_ended : bool = false
 var _current_speed : float
+var _is_spawning : bool = true
+
+var number_of_balls_in_path : int = 0
 var last_index_stopped : int = 1
 
 func _ready() -> void:
@@ -30,27 +32,40 @@ func _process(_delta: float) -> void:
 	if _level_ended:
 		end_of_level()
 		return 
-	if _can_spawn:
+	if _is_spawning and _can_spawn:
 		spawn_ball_at_begining()
 
 func _physics_process(delta: float) -> void:
 	if path.get_child_count() == 0:
 		return
 		
-	var path_follow : PathFollow2D = path.get_child(0)
+	var path_follow : PathFollow2D = path.get_child(-1)
 	
 	path_follow.progress += _current_speed*delta
 	if  path_follow.progress_ratio == 1.0:
 		handle_ball_reached_the_end(path_follow)
 		
-	for i in range(1,len(path.get_children())):
+	for i in range(path.get_child_count()-2,-1,-1):
 		path_follow = path.get_child(i)
-		if (path.get_child(i-1).progress - path_follow.progress) > spacing_between_spawn or _level_ended:
+		if (is_close(i,i+1)) or _level_ended:
 			path_follow.progress += _current_speed*delta
+		#if (is_too_close(i,i+1)):
+		#	path_follow.progress += _current_speed*delta
 		if path_follow.progress_ratio == 1.0:
 			handle_ball_reached_the_end(path_follow)
 	if path.get_child(-1).progress >= spacing_between_spawn:
 		_can_spawn = true
+
+func is_close(index_front : int, index_back : int):
+	var is_close : bool = ((path.get_child(index_front).progress - path.get_child(index_back).progress) 
+		< spacing_between_spawn*1)
+	return is_close
+
+func is_too_close(index_front : int, index_back : int):
+	var is_far : bool = ((path.get_child(index_front).progress - path.get_child(index_back).progress) 
+		< spacing_between_spawn*0.9)
+	return is_far
+
 
 func end_of_level():
 	speed = end_of_level_speed
@@ -85,7 +100,6 @@ func position_ball_on_path(ball : Ball, at_position : Vector2):
 	ball.call_deferred("stop")
 	create_tween().tween_property(ball,"global_position",at_position,0.2)
 	create_tween().tween_property(self,"_current_speed",speed,0.2)
-	
 
 func put_ball_on_path(new_ball : Ball, after_ball : Ball) -> void:
 	var path_follow_for_spawned_ball : PathFollow2D
@@ -93,7 +107,7 @@ func put_ball_on_path(new_ball : Ball, after_ball : Ball) -> void:
 	
 	put_ball_on_path_follow(new_ball,
 							path_follow_for_spawned_ball,
-							after_ball.get_parent().progress)
+							path.get_child(after_ball.get_parent().get_index()).progress)
 	
 	position_ball_on_path(new_ball, after_ball.global_position)
 	handle_new_ball_entered_path()
@@ -101,7 +115,6 @@ func put_ball_on_path(new_ball : Ball, after_ball : Ball) -> void:
 func handle_new_ball_entered_path():
 	number_of_balls_in_path = path.get_child_count()
 	last_index_stopped += 1
-	
 
 func handle_ball_reached_the_end(path_follow : PathFollow2D):
 	_level_ended = true
@@ -121,7 +134,7 @@ func _on_path_ball_hit(path_ball : Ball, frog_ball : Ball):
 	put_ball_on_path(frog_ball,path_ball)
 	_current_speed = position_in_path_speed
 	stop(path_ball.get_parent().get_index()+1)
-	
+
 func _on_ball_entered_tree(node : Node):
 	var ball : Ball = node
 	if ball.ball_owner == Ball.Owner.PATH:
@@ -132,3 +145,6 @@ func _on_ball_entered_tree(node : Node):
 	if (ball_checker.is_deletable(min_max)):
 		for i in range(min_max[0],min_max[1]+1):
 			path.get_child(i).queue_free()
+
+func _on_ball_spawner_spawner_reached_end() -> void:
+	_is_spawning = false
