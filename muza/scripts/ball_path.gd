@@ -4,6 +4,7 @@ class_name BallPath
 @onready var ball_spawner: BallSpawner = $BallSpawner
 @onready var path: Path2D = $Path
 @onready var begining_checker: Area2D = $BeginingChecker
+@onready var ball_checker: BallChecker = $BallChecker
 
 @export_subgroup("Speed")
 @export_range(1,100000,1) var speed : int = 50:
@@ -56,6 +57,7 @@ func end_of_level():
 
 func create_new_path_follow(after_index : int = -1):
 	var path_follow : PathFollow2D = PathFollow2D.new()
+	path_follow.connect("child_entered_tree",_on_ball_entered_tree)
 	path_follow.loop = false
 	if path.get_child_count() == 0:
 		path.add_child(path_follow)
@@ -69,11 +71,10 @@ func spawn_ball_at_begining():
 	var new_ball : Ball = ball_spawner.spawn()
 	new_ball.connect("ball_hit",_on_path_ball_hit)
 	path_follow_for_spawned_ball.add_child(new_ball)
-	handle_new_ball_entered_path()
+	handle_new_ball_entered_path(new_ball)
 
 func put_ball_on_path_follow(ball : Ball, path_follow : PathFollow2D, current_progress : float):
 	ball.get_parent().remove_child(ball)
-	ball.ball_owner = Ball.Owner.PATH
 	ball.connect("ball_hit",_on_path_ball_hit)
 	path_follow.call_deferred("add_child",ball)
 	path_follow.progress = current_progress
@@ -95,9 +96,9 @@ func put_ball_on_path(new_ball : Ball, after_ball : Ball) -> void:
 							after_ball.get_parent().progress)
 	
 	position_ball_on_path(new_ball, after_ball.global_position)
-	handle_new_ball_entered_path()
+	handle_new_ball_entered_path(new_ball)
 
-func handle_new_ball_entered_path():		
+func handle_new_ball_entered_path(new_ball : Ball):
 	number_of_balls_in_path = path.get_child_count()
 	last_index_stopped += 1
 	
@@ -121,5 +122,11 @@ func _on_path_ball_hit(path_ball : Ball, frog_ball : Ball):
 	_current_speed = position_in_path_speed
 	stop(path_ball.get_parent().get_index()+1)
 	
-##func _on_path_ball_left(path_ball : Ball, frog_ball : Ball):
-##	start()
+func _on_ball_entered_tree(node : Node):
+	var ball : Ball = node
+	if ball.ball_owner == Ball.Owner.PATH:
+		return
+		
+	ball.ball_owner = Ball.Owner.PATH
+	var min_max = (ball_checker.indexes_of_same_color_cluster(node.get_parent().get_index()))
+	print(ball_checker.is_deletable(min_max))

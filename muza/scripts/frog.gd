@@ -6,6 +6,7 @@ class_name Frog
 @onready var ball_spawner: BallSpawner = $BallSpawner
 @onready var shot_cooldown_timer: Timer = $ShotCooldownTimer
 
+@export_range(100,10000,50) var shot_speed : int
 @export_range(0.05,10,0.01) var shot_cooldown : float = 0.001:
 	set(value):
 		shot_cooldown = value
@@ -13,8 +14,8 @@ class_name Frog
 			shot_cooldown_timer.wait_time = shot_cooldown
 
 func _ready() -> void:
-	ready_ball_position.add_child(ball_spawner.spawn())
-	stand_by_ball_position.add_child(ball_spawner.spawn())
+	ready_ball_position.add_child(ball_spawner.spawn(shot_speed))
+	stand_by_ball_position.add_child(ball_spawner.spawn(shot_speed))
 	shot_cooldown_timer.wait_time = shot_cooldown
 
 func _physics_process(_delta: float) -> void:
@@ -43,4 +44,4 @@ func shoot(at_point : Vector2) -> void:
 	shot_cooldown_timer.start()
 
 	give_ball(stand_by_ball_position,ready_ball_position)
-	stand_by_ball_position.add_child(ball_spawner.spawn())
+	stand_by_ball_position.add_child(ball_spawner.spawn(shot_speed))
