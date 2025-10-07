@@ -129,4 +129,6 @@ func _on_ball_entered_tree(node : Node):
 		
 	ball.ball_owner = Ball.Owner.PATH
 	var min_max = (ball_checker.indexes_of_same_color_cluster(node.get_parent().get_index()))
-	print(ball_checker.is_deletable(min_max))
+	if (ball_checker.is_deletable(min_max)):
+		for i in range(min_max[0],min_max[1]+1):
+			path.get_child(i).queue_free()
