@@ -16,7 +16,7 @@ signal ball_left(path_ball, frog_ball)
 var ball_owner : Owner
 var _is_shot : bool = false
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func be_shot(at_point : Vector2) -> void:

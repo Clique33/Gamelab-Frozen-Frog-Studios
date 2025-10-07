@@ -4,6 +4,7 @@ class_name BallPath
 @onready var ball_spawner: BallSpawner = $BallSpawner
 @onready var path: Path2D = $Path
 @onready var begining_checker: Area2D = $BeginingChecker
+@onready var ball_checker: BallChecker = $BallChecker
 
 @export_subgroup("Speed")
 @export_range(1,100000,1) var speed : int = 50:
@@ -25,7 +26,7 @@ func _ready() -> void:
 	begining_checker.position = path.curve.get_baked_points()[0]
 	_current_speed = speed
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if _level_ended:
 		end_of_level()
 		return 
@@ -36,10 +37,10 @@ func _physics_process(delta: float) -> void:
 	if path.get_child_count() == 0:
 		return
 		
-	var path_follow : PathFollow2D
+	var path_follow : PathFollow2D = path.get_child(0)
 	
-	path.get_child(0).progress += _current_speed*delta
-	if  path.get_child(0).progress_ratio == 1.0:
+	path_follow.progress += _current_speed*delta
+	if  path_follow.progress_ratio == 1.0:
 		handle_ball_reached_the_end(path_follow)
 		
 	for i in range(1,len(path.get_children())):
@@ -56,6 +57,7 @@ func end_of_level():
 
 func create_new_path_follow(after_index : int = -1):
 	var path_follow : PathFollow2D = PathFollow2D.new()
+	path_follow.connect("child_entered_tree",_on_ball_entered_tree)
 	path_follow.loop = false
 	if path.get_child_count() == 0:
 		path.add_child(path_follow)
@@ -69,16 +71,15 @@ func spawn_ball_at_begining():
 	var new_ball : Ball = ball_spawner.spawn()
 	new_ball.connect("ball_hit",_on_path_ball_hit)
 	path_follow_for_spawned_ball.add_child(new_ball)
-	handle_new_ball_entered_path()
+	handle_new_ball_entered_path(new_ball)
 
 func put_ball_on_path_follow(ball : Ball, path_follow : PathFollow2D, current_progress : float):
 	ball.get_parent().remove_child(ball)
-	ball.ball_owner = Ball.Owner.PATH
 	ball.connect("ball_hit",_on_path_ball_hit)
 	path_follow.call_deferred("add_child",ball)
 	path_follow.progress = current_progress
 
-func position_ball_on_path_follow(ball : Ball, path_follow : PathFollow2D, at_position : Vector2):
+func position_ball_on_path(ball : Ball, at_position : Vector2):
 	var curr_global_position : Vector2 = ball.global_position
 	ball.set_deferred("global_position",curr_global_position)
 	ball.call_deferred("stop")
@@ -94,12 +95,10 @@ func put_ball_on_path(new_ball : Ball, after_ball : Ball) -> void:
 							path_follow_for_spawned_ball,
 							after_ball.get_parent().progress)
 	
-	position_ball_on_path_follow(new_ball,
-								 path_follow_for_spawned_ball,
-								 after_ball.global_position)
-	handle_new_ball_entered_path()
+	position_ball_on_path(new_ball, after_ball.global_position)
+	handle_new_ball_entered_path(new_ball)
 
-func handle_new_ball_entered_path():		
+func handle_new_ball_entered_path(new_ball : Ball):
 	number_of_balls_in_path = path.get_child_count()
 	last_index_stopped += 1
 	
@@ -108,12 +107,9 @@ func handle_ball_reached_the_end(path_follow : PathFollow2D):
 	_level_ended = true
 	if path_follow:
 		path_follow.queue_free()
-	else:
-		print(path.get_child(0).h_offset,path.get_child(0).v_offset)
 	number_of_balls_in_path = path.get_child_count()
 	if number_of_balls_in_path == 1:
 		path.get_child(0).queue_free()
-		print(path.get_child(0).get_child(0))
 
 func stop(from_index : int) -> void:
 	last_index_stopped = from_index
@@ -126,5 +122,13 @@ func _on_path_ball_hit(path_ball : Ball, frog_ball : Ball):
 	_current_speed = position_in_path_speed
 	stop(path_ball.get_parent().get_index()+1)
 	
-##func _on_path_ball_left(path_ball : Ball, frog_ball : Ball):
-##	start()
+func _on_ball_entered_tree(node : Node):
+	var ball : Ball = node
+	if ball.ball_owner == Ball.Owner.PATH:
+		return
+		
+	ball.ball_owner = Ball.Owner.PATH
+	var min_max = (ball_checker.indexes_of_same_color_cluster(node.get_parent().get_index()))
+	if (ball_checker.is_deletable(min_max)):
+		for i in range(min_max[0],min_max[1]+1):
+			path.get_child(i).queue_free()
