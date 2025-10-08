@@ -20,6 +20,7 @@ var number_of_balls_in_path : int = 0
 var _can_spawn : bool = true
 var _level_ended : bool = false
 var _current_speed : float
+var _last_connected_ball_index : int = 0 
 var last_index_stopped : int = 1
 
 func _ready() -> void:
@@ -34,24 +35,34 @@ func _process(_delta: float) -> void:
 		spawn_ball_at_begining()
 
 func _physics_process(delta: float) -> void:
+	move_connected_balls(delta)
+		
+func move_connected_balls(delta : float):
 	if path.get_child_count() == 0:
 		return
 		
-	var path_follow : PathFollow2D = path.get_child(0)
+	var path_follow : PathFollow2D = path.get_child(_last_connected_ball_index)
 	
 	path_follow.progress += _current_speed*delta
 	if  path_follow.progress_ratio == 1.0:
 		handle_ball_reached_the_end(path_follow)
 		
-	for i in range(1,len(path.get_children())):
+	for i in range(_last_connected_ball_index+1,len(path.get_children())):
 		path_follow = path.get_child(i)
 		if (path.get_child(i-1).progress - path_follow.progress) > spacing_between_spawn or _level_ended:
-			path_follow.progress += _current_speed*delta
+			path_follow.progress = path.get_child(i-1).progress - spacing_between_spawn
 		if path_follow.progress_ratio == 1.0:
 			handle_ball_reached_the_end(path_follow)
 	if path.get_child(-1).progress >= spacing_between_spawn:
 		_can_spawn = true
+	update_last_connected_index()
 
+func update_last_connected_index() -> void:
+	for i in range(len(path.get_children())-1,0,-1):
+		if (path.get_child(i-1).progress - path.get_child(i).progress) > spacing_between_spawn*1.05:
+			_last_connected_ball_index = i
+			return
+	_last_connected_ball_index = 0
 func end_of_level():
 	speed = end_of_level_speed
 
@@ -132,3 +143,7 @@ func _on_ball_entered_tree(node : Node):
 	if (ball_checker.is_deletable(min_max)):
 		for i in range(min_max[0],min_max[1]+1):
 			path.get_child(i).queue_free()
+
+
+func _on_path_child_exiting_tree(node: Node) -> void:
+	update_last_connected_index()
