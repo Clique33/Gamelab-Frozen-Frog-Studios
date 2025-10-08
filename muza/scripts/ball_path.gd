@@ -34,23 +34,27 @@ func _process(_delta: float) -> void:
 		spawn_ball_at_begining()
 
 func _physics_process(delta: float) -> void:
+	move_path_of_balls(delta)
+
+func move_path_of_balls(delta: float, first_movable_index : int = 0):
 	if path.get_child_count() == 0:
 		return
 		
-	var path_follow : PathFollow2D = path.get_child(0)
+	var path_follow : PathFollow2D = path.get_child(first_movable_index)
 	
 	path_follow.progress += _current_speed*delta
 	if  path_follow.progress_ratio == 1.0:
 		handle_ball_reached_the_end(path_follow)
 		
-	for i in range(1,len(path.get_children())):
+	for i in range(first_movable_index+1,len(path.get_children())):
 		path_follow = path.get_child(i)
 		if (path.get_child(i-1).progress - path_follow.progress) > spacing_between_spawn or _level_ended:
-			path_follow.progress += _current_speed*delta
+			path_follow.progress = path.get_child(i-1).progress - spacing_between_spawn
 		if path_follow.progress_ratio == 1.0:
 			handle_ball_reached_the_end(path_follow)
 	if path.get_child(-1).progress >= spacing_between_spawn:
 		_can_spawn = true
+	
 
 func end_of_level():
 	speed = end_of_level_speed

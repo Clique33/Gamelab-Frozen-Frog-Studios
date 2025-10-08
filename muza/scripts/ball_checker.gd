@@ -31,5 +31,9 @@ func indexes_of_same_color_cluster(index : int) -> Array[int]:
 	return [min_index_of_same_color, max_index_of_same_color]
 
 ##Returns true if the array is deletable, i.e., at least 3 balls of same color
-func is_deletable(indexes : Array[int]):
-	return (indexes[1]-indexes[0]) >= 2
+func is_deletable(indexes : Array[int]) -> bool:
+	return is_balls_connected(indexes) and ((indexes[1]-indexes[0]) >= 2)
+
+##Returns true if the array is deletable, i.e., at least 3 balls of same color
+func is_balls_connected(indexes : Array[int]) -> bool:
+	return true
