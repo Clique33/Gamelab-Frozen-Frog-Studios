@@ -24,6 +24,7 @@ var _last_connected_ball_index : int = 0
 var last_index_stopped : int = 1
 
 func _ready() -> void:
+	ball_checker.spacing_between_balls = spacing_between_spawn
 	begining_checker.position = path.curve.get_baked_points()[0]
 	_current_speed = speed
 
@@ -59,7 +60,7 @@ func move_connected_balls(delta : float):
 
 func update_last_connected_index() -> void:
 	for i in range(len(path.get_children())-1,0,-1):
-		if (path.get_child(i-1).progress - path.get_child(i).progress) > spacing_between_spawn*1.05:
+		if (path.get_child(i-1).progress - path.get_child(i).progress) > spacing_between_spawn*1.02:
 			_last_connected_ball_index = i
 			return
 	_last_connected_ball_index = 0
@@ -143,7 +144,6 @@ func _on_ball_entered_tree(node : Node):
 	if (ball_checker.is_deletable(min_max)):
 		for i in range(min_max[0],min_max[1]+1):
 			path.get_child(i).queue_free()
-
 
 func _on_path_child_exiting_tree(node: Node) -> void:
 	update_last_connected_index()

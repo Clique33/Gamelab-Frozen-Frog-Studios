@@ -2,6 +2,7 @@ extends Node
 class_name BallChecker
 
 @export var path : Path2D ##Path whose children are Pathfollows of Balls
+@export var spacing_between_balls : float 
 
 ##Returns the minimum and maximum indexes of the cluster of same color balls in 
 ##which 'index' is part of.
@@ -32,4 +33,11 @@ func indexes_of_same_color_cluster(index : int) -> Array[int]:
 
 ##Returns true if the array is deletable, i.e., at least 3 balls of same color
 func is_deletable(indexes : Array[int]):
-	return (indexes[1]-indexes[0]) >= 2
+	return is_range_connected(indexes) and (indexes[1]-indexes[0]) >= 2
+
+##Returns true if the array is deletable, i.e., at least 3 balls of same color
+func is_range_connected(indexes : Array[int]):
+	for i in range(indexes[0],indexes[1]+1):
+		if (path.get_child(i-1).progress - path.get_child(i).progress) > spacing_between_balls*1.02:
+			return false
+	return true
