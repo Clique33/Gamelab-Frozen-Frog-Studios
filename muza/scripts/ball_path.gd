@@ -5,13 +5,16 @@ class_name BallPath
 @onready var path: Path2D = $Path
 @onready var begining_checker: Area2D = $BeginingChecker
 @onready var ball_checker: BallChecker = $BallChecker
+@onready var begin_of_level_timer: Timer = $BeginOfLevelTimer
 
+@export var begining_time : float = 1.0
 @export_subgroup("Speed")
 @export_range(1,100000,1) var speed : int = 50:
 	set(value):
 		speed = value
 		_current_speed = speed
 @export_range(1,100000,1) var position_in_path_speed : int = 100
+@export_range(1,100000,1) var begin_of_level_speed : int = 300
 @export_range(1,100000,1) var end_of_level_speed : int = 400
 @export_category("Spacing")
 @export var spacing_between_spawn : float = 10
@@ -25,9 +28,11 @@ var _last_length_connected_ball_indexes : int = 1
 var last_index_stopped : int = 1
 
 func _ready() -> void:
+	begin_of_level_timer.wait_time = begining_time
+	begin_of_level_timer.start()
 	ball_checker.spacing_between_balls = spacing_between_spawn
 	begining_checker.position = path.curve.get_baked_points()[0]
-	_current_speed = speed
+	_current_speed = begin_of_level_speed
 
 func _process(_delta: float) -> void:
 	if _level_ended:
@@ -73,7 +78,8 @@ func update_last_connected_indexes(end_index : int = (len(path.get_children())-1
 			update_last_connected_indexes(i-1)
 			return
 	_last_connected_ball_indexes.append(0)
-
+	if len(_last_connected_ball_indexes) > 2:
+		print(_last_connected_ball_indexes)
 func end_of_level():
 	speed = end_of_level_speed
 
@@ -157,3 +163,7 @@ func _on_ball_entered_tree(node : Node):
 
 func _on_path_child_exiting_tree(node: Node) -> void:
 	update_last_connected_indexes()
+
+
+func _on_begin_of_level_timer_timeout() -> void:
+	_current_speed = speed

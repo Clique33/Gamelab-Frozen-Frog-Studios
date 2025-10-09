@@ -3,4 +3,4 @@ extends Node2D
 
 
 func _on_timer_timeout() -> void:
-	print(ball_path.number_of_balls_in_path)
+	ball_path._current_speed = ball_path.speed

@@ -8,6 +8,7 @@
 script = ExtResource("1_nd71p")
 
 [node name="BallPath" parent="." instance=ExtResource("1_j8ivh")]
+begining_time = 2.0
 position_in_path_speed = 150
 end_of_level_speed = 500
 
