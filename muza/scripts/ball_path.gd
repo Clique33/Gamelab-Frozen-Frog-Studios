@@ -25,7 +25,6 @@ var _level_ended : bool = false
 var _current_speed : float
 var _last_connected_ball_indexes : Array[int] = [0]
 var _last_length_connected_ball_indexes : int = 1
-var last_index_stopped : int = 1
 
 func _ready() -> void:
 	begin_of_level_timer.wait_time = begining_time
@@ -132,8 +131,13 @@ func put_ball_on_path(new_ball : Ball, after_ball : Ball) -> void:
 
 func handle_new_ball_entered_path(new_ball : Ball):
 	number_of_balls_in_path = path.get_child_count()
-	last_index_stopped += 1
-	
+
+func handle_destroy_balls(ball : Ball):
+	var min_max = (ball_checker.indexes_of_same_color_cluster(ball.get_parent().get_index()))
+	if (ball_checker.is_deletable(min_max)):
+		print(min_max)
+		for i in range(min_max[0],min_max[1]+1):
+			path.get_child(i).queue_free()
 
 func handle_ball_reached_the_end(path_follow : PathFollow2D):
 	_level_ended = true
@@ -155,18 +159,8 @@ func _on_ball_entered_tree(node : Node):
 	ball.ball_owner = Ball.Owner.PATH
 	handle_destroy_balls(ball)
 
-func handle_destroy_balls(ball : Ball):
-	var min_max = (ball_checker.indexes_of_same_color_cluster(ball.get_parent().get_index()))
-	if (ball_checker.is_deletable(min_max)):
-		print(min_max)
-		for i in range(min_max[0],min_max[1]+1):
-			path.get_child(i).queue_free()
-	
-
 func _on_path_child_exiting_tree() -> void:
-	#print("before_exit",_last_connected_ball_indexes)
 	update_last_connected_indexes()
-	#print("after_exit",_last_connected_ball_indexes)
 
 func _on_begin_of_level_timer_timeout() -> void:
 	_current_speed = speed
