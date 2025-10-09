@@ -143,16 +143,9 @@ func handle_ball_reached_the_end(path_follow : PathFollow2D):
 	if number_of_balls_in_path == 1:
 		path.get_child(0).queue_free()
 
-func stop(from_index : int) -> void:
-	last_index_stopped = from_index
-
-func start() -> void:
-	last_index_stopped = number_of_balls_in_path
-
 func _on_path_ball_hit(path_ball : Ball, frog_ball : Ball):
 	put_ball_on_path(frog_ball,path_ball)
 	_current_speed = position_in_path_speed
-	stop(path_ball.get_parent().get_index()+1)
 	
 func _on_ball_entered_tree(node : Node):
 	var ball : Ball = node
