@@ -78,14 +78,18 @@ func update_last_connected_indexes(end_index : int = (len(path.get_children())-1
 			update_last_connected_indexes(i-1)
 			return
 	_last_connected_ball_indexes.append(0)
-	if len(_last_connected_ball_indexes) > 2:
-		print(_last_connected_ball_indexes)
+	if _last_length_connected_ball_indexes > len(_last_connected_ball_indexes):
+		print("connected")
+	elif _last_length_connected_ball_indexes < len(_last_connected_ball_indexes):
+		print("disconnected")
+
 func end_of_level():
 	speed = end_of_level_speed
 
 func create_new_path_follow(after_index : int = -1):
 	var path_follow : PathFollow2D = PathFollow2D.new()
 	path_follow.connect("child_entered_tree",_on_ball_entered_tree)
+	path_follow.connect("tree_exited",_on_path_child_exiting_tree)
 	path_follow.loop = false
 	if path.get_child_count() == 0:
 		path.add_child(path_follow)
@@ -156,14 +160,20 @@ func _on_ball_entered_tree(node : Node):
 		return
 		
 	ball.ball_owner = Ball.Owner.PATH
-	var min_max = (ball_checker.indexes_of_same_color_cluster(node.get_parent().get_index()))
+	handle_destroy_balls(ball)
+
+func handle_destroy_balls(ball : Ball):
+	var min_max = (ball_checker.indexes_of_same_color_cluster(ball.get_parent().get_index()))
 	if (ball_checker.is_deletable(min_max)):
+		print(min_max)
 		for i in range(min_max[0],min_max[1]+1):
 			path.get_child(i).queue_free()
+	
 
-func _on_path_child_exiting_tree(node: Node) -> void:
+func _on_path_child_exiting_tree() -> void:
+	#print("before_exit",_last_connected_ball_indexes)
 	update_last_connected_indexes()
-
+	#print("after_exit",_last_connected_ball_indexes)
 
 func _on_begin_of_level_timer_timeout() -> void:
 	_current_speed = speed
