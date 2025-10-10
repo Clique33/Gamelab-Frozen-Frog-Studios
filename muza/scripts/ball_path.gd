@@ -81,12 +81,13 @@ func update_last_connected_indexes(end_index : int = (len(path.get_children())-1
 func end_of_level():
 	speed = end_of_level_speed
 
-func create_new_path_follow(after_index : int = -1):
+func create_new_path_follow(after_index : int = -1, progress : float = 0):
 	var path_follow : PathFollow2D = PathFollow2D.new()
 	path_follow.connect("child_entered_tree",_on_ball_entered_tree)
 	path_follow.connect("child_exiting_tree",_on_ball_exiting_tree)
 	path_follow.connect("tree_exited",_on_path_child_exiting_tree)
 	path_follow.loop = false
+	path_follow.progress = progress
 	if path.get_child_count() == 0:
 		path.add_child(path_follow)
 	else:
@@ -99,12 +100,11 @@ func spawn_ball_at_begining():
 	var new_ball : Ball = ball_spawner.spawn()
 	new_ball.connect("ball_hit",_on_path_ball_hit)
 	path_follow_for_spawned_ball.add_child(new_ball)
-	handle_new_ball_entered_path(new_ball)
 
-func put_ball_on_path_follow(ball : Ball, path_follow : PathFollow2D, current_progress : float):
+func put_ball_on_path_follow(ball : Ball, path_follow : PathFollow2D):
 	ball.get_parent().remove_child(ball)
+	ball.connect("ball_hit",_on_path_ball_hit)
 	path_follow.call_deferred("add_child",ball)
-	path_follow.progress = current_progress
 
 func position_ball_on_path(ball : Ball, at_position : Vector2):
 	var curr_global_position : Vector2 = ball.global_position
@@ -118,17 +118,14 @@ func position_ball_on_path(ball : Ball, at_position : Vector2):
 
 func put_ball_on_path(new_ball : Ball, after_ball : Ball) -> void:
 	var path_follow_for_spawned_ball : PathFollow2D
-	path_follow_for_spawned_ball = create_new_path_follow(after_ball.get_parent().get_index())
-	
-	put_ball_on_path_follow(new_ball,
-							path_follow_for_spawned_ball,
-							after_ball.get_parent().progress)
-	
+	path_follow_for_spawned_ball = (
+		create_new_path_follow(
+			after_ball.get_parent().get_index(),
+			after_ball.get_parent().progress
+		)
+	)
+	put_ball_on_path_follow(new_ball, path_follow_for_spawned_ball)
 	position_ball_on_path(new_ball, after_ball.global_position)
-	handle_new_ball_entered_path(new_ball)
-
-func handle_new_ball_entered_path(new_ball : Ball):
-	number_of_balls_in_path = path.get_child_count()
 
 func handle_destroy_balls(ball : Ball):
 	var min_max = (ball_checker.indexes_of_same_color_cluster(ball.get_parent().get_index()))
