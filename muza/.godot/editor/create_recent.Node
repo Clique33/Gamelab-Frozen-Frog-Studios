@@ -1,6 +1,9 @@
+Label
+Label3D
+Control
+Node
 Timer
 BallChecker
-Node
 CharacterBody2D
 Node2D
 CollisionShape2D

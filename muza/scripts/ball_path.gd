@@ -40,6 +40,8 @@ func _process(delta: float) -> void:
 		spawn_ball_at_begining()
 	update_last_connected_indexes()
 	move_initial_connected_balls(delta)
+	update_last_connected_indexes()
+	#move_other_connected_balls()
 	move_back_combo(delta)
 
 func _physics_process(delta: float) -> void:
@@ -47,6 +49,21 @@ func _physics_process(delta: float) -> void:
 	
 func move_back_combo(delta):
 	pass
+
+func move_other_connected_balls():
+	if len(_last_connected_ball_indexes) < 2:
+		return
+		
+	var path_follow : PathFollow2D
+		
+	for i in range(1,len(_last_connected_ball_indexes)):
+		for j in range(_last_connected_ball_indexes[i]+1,_last_connected_ball_indexes[i-1]):
+			path_follow = path.get_child(j)
+			if (path.get_child(j-1).progress - path_follow.progress) < spacing_between_spawn:
+				path_follow.progress = path.get_child(j-1).progress - spacing_between_spawn
+				pass
+			if path_follow.progress_ratio == 1.0:
+				handle_ball_reached_the_end(path_follow)
 
 func move_initial_connected_balls(delta : float):
 	if path.get_child_count() == 0:
@@ -56,7 +73,6 @@ func move_initial_connected_balls(delta : float):
 	
 	path_follow.progress += _current_speed*delta
 	if  path_follow.progress_ratio == 1.0:
-		print('here')
 		handle_ball_reached_the_end(path_follow)
 		
 	for i in range(_last_connected_ball_indexes[0]+1,len(path.get_children())):
@@ -83,24 +99,20 @@ func end_of_level():
 	speed = end_of_level_speed
 
 func create_new_path_follow(after_index : int = -1, progress : float = 0):
+	
+	var path_follow : PathFollow2D = PathFollow2D.new()
+	path_follow.connect("child_entered_tree",_on_ball_entered_tree)
+	path_follow.connect("child_exiting_tree",_on_ball_exiting_tree)
+	path_follow.connect("tree_exited",_on_path_child_exiting_tree)
+	path_follow.loop = false
+	path_follow.rotates = false
+	path_follow.progress = progress
+	
 	if path.get_child_count() == 0:
-		var path_follow : PathFollow2D = PathFollow2D.new()
-		path_follow.connect("child_entered_tree",_on_ball_entered_tree)
-		path_follow.connect("child_exiting_tree",_on_ball_exiting_tree)
-		path_follow.connect("tree_exited",_on_path_child_exiting_tree)
-		path_follow.loop = false
-		path_follow.progress = progress
 		path.add_child(path_follow)
-		return path_follow
 	else:
-		var path_follow : PathFollow2D = PathFollow2D.new()
-		path_follow.connect("child_entered_tree",_on_ball_entered_tree)
-		path_follow.connect("child_exiting_tree",_on_ball_exiting_tree)
-		path_follow.connect("tree_exited",_on_path_child_exiting_tree)
-		path_follow.loop = false
-		path_follow.progress = progress
 		path.get_child(after_index).add_sibling(path_follow)
-		return path_follow
+	return path_follow
 
 func spawn_ball_at_begining():
 	_can_spawn = false
@@ -152,6 +164,8 @@ func handle_ball_reached_the_end(path_follow : PathFollow2D):
 func _on_path_ball_hit(path_ball : Ball, frog_ball : Ball):
 	frog_ball.connect("tween_finished",_on_ball_positioned)
 	put_ball_on_path(frog_ball,path_ball)
+	frog_ball.label.text = "hit"
+	path_ball.label.text = "hit"
 	_current_speed = position_in_path_speed
 
 func _on_ball_entered_tree(node : Node):
@@ -161,7 +175,7 @@ func _on_ball_entered_tree(node : Node):
 	ball.ball_owner = Ball.Owner.PATH
 
 func _on_ball_exiting_tree(node : Node):
-	update_last_connected_indexes()
+	#update_last_connected_indexes()
 	pass
 
 func _on_path_child_exiting_tree() -> void:
@@ -173,3 +187,5 @@ func _on_begin_of_level_timer_timeout() -> void:
 
 func _on_ball_positioned(ball : Ball) -> void:
 	handle_destroy_balls(ball)
+	update_last_connected_indexes()
+	move_other_connected_balls()

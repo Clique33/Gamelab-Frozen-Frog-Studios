@@ -4,6 +4,8 @@ class_name Ball
 enum Colors{YELLOW = 0xffffffff, RED = 0xff1c76ff, GREEN = 0x00ff00ff}
 enum Owner{FROG, PATH}
 
+@onready var label: Label = $Label
+
 signal ball_hit(path_ball, frog_ball)
 signal tween_finished(ball : Ball)
 signal ball_left(path_ball, frog_ball)
@@ -18,6 +20,7 @@ var ball_owner : Owner
 var _is_shot : bool = false
 
 func _physics_process(_delta: float) -> void:
+	label.global_position = global_position + Vector2(15,15)
 	move_and_slide()
 
 func be_shot(at_point : Vector2) -> void:
