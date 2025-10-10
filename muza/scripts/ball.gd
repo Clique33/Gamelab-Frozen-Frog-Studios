@@ -5,6 +5,7 @@ enum Colors{YELLOW = 0xffffffff, RED = 0xff1c76ff, GREEN = 0x00ff00ff}
 enum Owner{FROG, PATH}
 
 signal ball_hit(path_ball, frog_ball)
+signal tween_finished(ball : Ball)
 signal ball_left(path_ball, frog_ball)
 
 @export var shot_speed : int = 500
@@ -38,7 +39,6 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 		return
 	ball_hit.emit(self,area.get_parent())
 
-
 func _on_area_2d_area_exited(area: Area2D) -> void:
 	if  not (area.get_parent() is Ball):
 		return
@@ -46,3 +46,6 @@ func _on_area_2d_area_exited(area: Area2D) -> void:
 		area.get_parent().ball_owner == Owner.FROG) :
 		return
 	ball_left.emit(self,area.get_parent())
+	
+func tween_finished_emitter():
+	emit_signal("tween_finished",self)

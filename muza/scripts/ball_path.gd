@@ -77,10 +77,6 @@ func update_last_connected_indexes(end_index : int = (len(path.get_children())-1
 			update_last_connected_indexes(i-1)
 			return
 	_last_connected_ball_indexes.append(0)
-	if _last_length_connected_ball_indexes > len(_last_connected_ball_indexes):
-		print("connected")
-	elif _last_length_connected_ball_indexes < len(_last_connected_ball_indexes):
-		print("disconnected")
 
 func end_of_level():
 	speed = end_of_level_speed
@@ -88,6 +84,7 @@ func end_of_level():
 func create_new_path_follow(after_index : int = -1):
 	var path_follow : PathFollow2D = PathFollow2D.new()
 	path_follow.connect("child_entered_tree",_on_ball_entered_tree)
+	path_follow.connect("child_exiting_tree",_on_ball_exiting_tree)
 	path_follow.connect("tree_exited",_on_path_child_exiting_tree)
 	path_follow.loop = false
 	if path.get_child_count() == 0:
@@ -106,7 +103,6 @@ func spawn_ball_at_begining():
 
 func put_ball_on_path_follow(ball : Ball, path_follow : PathFollow2D, current_progress : float):
 	ball.get_parent().remove_child(ball)
-	ball.connect("ball_hit",_on_path_ball_hit)
 	path_follow.call_deferred("add_child",ball)
 	path_follow.progress = current_progress
 
@@ -114,7 +110,9 @@ func position_ball_on_path(ball : Ball, at_position : Vector2):
 	var curr_global_position : Vector2 = ball.global_position
 	ball.set_deferred("global_position",curr_global_position)
 	ball.call_deferred("stop")
-	create_tween().tween_property(ball,"global_position",at_position,0.2)
+	var tween : Tween = create_tween()
+	tween.tween_property(ball,"global_position",at_position,0.2)
+	tween.connect("finished",ball.tween_finished_emitter)
 	create_tween().tween_property(self,"_current_speed",speed,0.2)
 	
 
@@ -135,7 +133,7 @@ func handle_new_ball_entered_path(new_ball : Ball):
 func handle_destroy_balls(ball : Ball):
 	var min_max = (ball_checker.indexes_of_same_color_cluster(ball.get_parent().get_index()))
 	if (ball_checker.is_deletable(min_max)):
-		print(min_max)
+		#print(min_max)
 		for i in range(min_max[0],min_max[1]+1):
 			path.get_child(i).queue_free()
 
@@ -148,19 +146,26 @@ func handle_ball_reached_the_end(path_follow : PathFollow2D):
 		path.get_child(0).queue_free()
 
 func _on_path_ball_hit(path_ball : Ball, frog_ball : Ball):
+	frog_ball.connect("tween_finished",_on_ball_positioned)
 	put_ball_on_path(frog_ball,path_ball)
 	_current_speed = position_in_path_speed
-	
+
 func _on_ball_entered_tree(node : Node):
 	var ball : Ball = node
 	if ball.ball_owner == Ball.Owner.PATH:
 		return
-		
+	
 	ball.ball_owner = Ball.Owner.PATH
-	handle_destroy_balls(ball)
+
+func _on_ball_exiting_tree(node : Node):
+	#print("_on_ball_exiting_tree")
+	pass
 
 func _on_path_child_exiting_tree() -> void:
 	update_last_connected_indexes()
 
 func _on_begin_of_level_timer_timeout() -> void:
 	_current_speed = speed
+
+func _on_ball_positioned(ball : Ball) -> void:
+	handle_destroy_balls(ball)
