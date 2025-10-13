@@ -1,5 +1,6 @@
+res://scenes/ball.tscn
+res://scenes/ball_path.tscn
 res://scenes/test_scene.tscn
 res://scripts/ball_path.gd
 res://scripts/ball.gd
-res://scenes/ball.tscn
-res://scenes/ball_path.tscn
+res://scripts/ball_checker.gd

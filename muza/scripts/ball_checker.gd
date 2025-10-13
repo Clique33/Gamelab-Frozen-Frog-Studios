@@ -34,6 +34,11 @@ func indexes_of_same_color_cluster(index : int) -> Array[int]:
 ##Returns true if the array is deletable, i.e., at least 3 balls of same color
 func is_deletable(indexes : Array[int]):
 	return is_range_connected(indexes) and (indexes[1]-indexes[0]) >= 2
+	
+##Returns true if the array is deletable, i.e., at least 3 balls of same color
+func is_combo(index : int):
+	var indexes : Array[int] = indexes_of_same_color_cluster(index)
+	return not is_range_connected(indexes) and (indexes[1]-indexes[0]) >= 2
 
 ##Returns true if the array is deletable, i.e., at least 3 balls of same color
 func is_range_connected(indexes : Array[int]):

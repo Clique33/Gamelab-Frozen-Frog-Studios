@@ -1,12 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cqfo4qc5w05jk"]
+[gd_scene load_steps=3 format=3 uid="uid://cqfo4qc5w05jk"]
 
 [ext_resource type="PackedScene" uid="uid://cljo38s36dm54" path="res://scenes/ball_path.tscn" id="1_j8ivh"]
-[ext_resource type="Script" uid="uid://c4c00ew8cidwc" path="res://scripts/test_scene.gd" id="1_nd71p"]
 [ext_resource type="PackedScene" uid="uid://chnt2xhqf1y3f" path="res://scenes/frog.tscn" id="2_nd71p"]
-[ext_resource type="Script" uid="uid://fi88xqhvhlua" path="res://scripts/unpause.gd" id="4_7ddre"]
 
 [node name="testScene" type="Node2D"]
-script = ExtResource("1_nd71p")
 
 [node name="BallPath" parent="." instance=ExtResource("1_j8ivh")]
 begining_time = 2.0
@@ -19,4 +16,3 @@ shot_cooldown = 0.2
 
 [node name="Node" type="Node" parent="."]
 process_mode = 2
-script = ExtResource("4_7ddre")
