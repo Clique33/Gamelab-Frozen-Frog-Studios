@@ -23,7 +23,7 @@ var number_of_balls_in_path : int = 0
 var _can_spawn : bool = true
 var _level_ended : bool = false
 var _current_speed : float
-var _last_connected_ball_indexes : Array[int] = [0]
+var _biggest_connected_ball_indexes : Array[int] = [0]
 var _last_length_connected_ball_indexes : int = 1
 
 func _ready() -> void:
@@ -39,36 +39,51 @@ func _process(delta: float) -> void:
 	elif _can_spawn:
 		spawn_ball_at_begining()
 	update_last_connected_indexes()
-	move_initial_connected_balls(delta)
+	move_last_ball(delta)
+	move_initial_connected_balls()
 	update_last_connected_indexes()
 	move_back_combo(delta)
 
-func _physics_process(delta: float) -> void:
-	pass
+func move_last_ball(delta : float, index_last_ball : int = -1, forward : bool = true) -> void:
+	if path.get_child_count() == 0:
+		return
+		
+	var path_follow : PathFollow2D 
+	if index_last_ball == -1:
+		index_last_ball = _biggest_connected_ball_indexes[0]
+		
+	path_follow = path.get_child(index_last_ball)
+	if forward:
+		path_follow.progress += _current_speed*delta
+	else:
+		path_follow.progress -= _current_speed*delta
+	if  path_follow.progress_ratio == 1.0:
+		handle_ball_reached_the_end(path_follow)
 	
 func move_back_combo(delta):
-	print(_last_connected_ball_indexes)
-	if(len(_last_connected_ball_indexes) < 2):
+	print(_biggest_connected_ball_indexes)
+	if(len(_biggest_connected_ball_indexes) < 2):
 		return 
-	for i in len(_last_connected_ball_indexes):
-		if (ball_checker.is_combo(_last_connected_ball_indexes[i])):
+	for i in len(_biggest_connected_ball_indexes):
+		if (ball_checker.is_combo(_biggest_connected_ball_indexes[i])):
 			move_backwards(i,delta)
-	pass
 
 func move_backwards(index : int, delta : float):
-	path.get_child(_last_connected_ball_indexes[index]-1).progress -= _current_speed*delta
-	for j in range(_last_connected_ball_indexes[index]-2,_last_connected_ball_indexes[index+1]-1,-1):
+	path.get_child(_biggest_connected_ball_indexes[index]-1).progress -= _current_speed*delta
+	if _biggest_connected_ball_indexes[index] < 2:
+		return
+	for j in range(_biggest_connected_ball_indexes[index]-2,_biggest_connected_ball_indexes[index+1]-1,-1):
 		if (path.get_child(j-1).progress - path.get_child(j).progress) > spacing_between_spawn:
 			path.get_child(j).progress = path.get_child(j-1).progress - spacing_between_spawn
 
 func move_other_connected_balls():
-	if len(_last_connected_ball_indexes) < 2:
+	if len(_biggest_connected_ball_indexes) < 2:
 		return
 		
 	var path_follow : PathFollow2D
 		
-	for i in range(1,len(_last_connected_ball_indexes)):
-		for j in range(_last_connected_ball_indexes[i]+1,_last_connected_ball_indexes[i-1]):
+	for i in range(1,len(_biggest_connected_ball_indexes)):
+		for j in range(_biggest_connected_ball_indexes[i]+1,_biggest_connected_ball_indexes[i-1]):
 			path_follow = path.get_child(j)
 			if (path.get_child(j-1).progress - path_follow.progress) < spacing_between_spawn:
 				path_follow.progress = path.get_child(j-1).progress - spacing_between_spawn
@@ -76,17 +91,13 @@ func move_other_connected_balls():
 			if path_follow.progress_ratio == 1.0:
 				handle_ball_reached_the_end(path_follow)
 
-func move_initial_connected_balls(delta : float):
+func move_initial_connected_balls():
 	if path.get_child_count() == 0:
 		return
 		
-	var path_follow : PathFollow2D = path.get_child(_last_connected_ball_indexes[0])
-	
-	path_follow.progress += _current_speed*delta
-	if  path_follow.progress_ratio == 1.0:
-		handle_ball_reached_the_end(path_follow)
+	var path_follow : PathFollow2D
 		
-	for i in range(_last_connected_ball_indexes[0]+1,len(path.get_children())):
+	for i in range(_biggest_connected_ball_indexes[0]+1,len(path.get_children())):
 		path_follow = path.get_child(i)
 		if (path.get_child(i-1).progress - path_follow.progress) > spacing_between_spawn or _level_ended:
 			path_follow.progress = path.get_child(i-1).progress - spacing_between_spawn
@@ -97,14 +108,14 @@ func move_initial_connected_balls(delta : float):
 
 func update_last_connected_indexes(end_index : int = (len(path.get_children())-1)) -> void:
 	if end_index == (len(path.get_children())-1):
-		_last_length_connected_ball_indexes = len(_last_connected_ball_indexes)
-		_last_connected_ball_indexes = []
+		_last_length_connected_ball_indexes = len(_biggest_connected_ball_indexes)
+		_biggest_connected_ball_indexes = []
 	for i in range(end_index,0,-1):
 		if (path.get_child(i-1).progress - path.get_child(i).progress) > spacing_between_spawn*1.02:
-			_last_connected_ball_indexes.append(i)
+			_biggest_connected_ball_indexes.append(i)
 			update_last_connected_indexes(i-1)
 			return
-	_last_connected_ball_indexes.append(0)
+	_biggest_connected_ball_indexes.append(0)
 
 func end_of_level():
 	speed = end_of_level_speed
