@@ -43,16 +43,16 @@ func _process(delta: float) -> void:
 	move_initial_connected_balls()
 	update_last_connected_indexes()
 	move_back_combo(delta)
+	for i in range(1,len(_biggest_connected_ball_indexes)):
+		move_initial_connected_balls(i,false)
 
 func move_last_ball(delta : float, index_last_ball : int = -1, forward : bool = true) -> void:
 	if path.get_child_count() == 0:
 		return
-		
-	var path_follow : PathFollow2D 
 	if index_last_ball == -1:
 		index_last_ball = _biggest_connected_ball_indexes[0]
-		
-	path_follow = path.get_child(index_last_ball)
+	
+	var path_follow : PathFollow2D = path.get_child(index_last_ball)
 	if forward:
 		path_follow.progress += _current_speed*delta
 	else:
@@ -61,17 +61,13 @@ func move_last_ball(delta : float, index_last_ball : int = -1, forward : bool = 
 		handle_ball_reached_the_end(path_follow)
 	
 func move_back_combo(delta):
-	print(_biggest_connected_ball_indexes)
 	if(len(_biggest_connected_ball_indexes) < 2):
 		return 
 	for i in len(_biggest_connected_ball_indexes):
 		if (ball_checker.is_combo(_biggest_connected_ball_indexes[i])):
-			move_backwards(i,delta)
+			move_last_ball(delta,_biggest_connected_ball_indexes[i+1],false)
 
 func move_backwards(index : int, delta : float):
-	path.get_child(_biggest_connected_ball_indexes[index]-1).progress -= _current_speed*delta
-	if _biggest_connected_ball_indexes[index] < 2:
-		return
 	for j in range(_biggest_connected_ball_indexes[index]-2,_biggest_connected_ball_indexes[index+1]-1,-1):
 		if (path.get_child(j-1).progress - path.get_child(j).progress) > spacing_between_spawn:
 			path.get_child(j).progress = path.get_child(j-1).progress - spacing_between_spawn
@@ -91,18 +87,33 @@ func move_other_connected_balls():
 			if path_follow.progress_ratio == 1.0:
 				handle_ball_reached_the_end(path_follow)
 
-func move_initial_connected_balls():
+func move_initial_connected_balls(index : int = 0, forward : bool = true):
 	if path.get_child_count() == 0:
 		return
 		
 	var path_follow : PathFollow2D
+	var first_index : int = _biggest_connected_ball_indexes[index]
+	var last_index : int = len(path.get_children())
+	
+	if index > 0:
+		last_index = _biggest_connected_ball_indexes[index-1]
+	
+	if forward:
+		for i in range(first_index+1,last_index):
+			path_follow = path.get_child(i)
+			if (path.get_child(i-1).progress - path_follow.progress) > spacing_between_spawn or _level_ended:
+				path_follow.progress = path.get_child(i-1).progress - spacing_between_spawn
+			if path_follow.progress_ratio == 1.0:
+				handle_ball_reached_the_end(path_follow)
+	else:
+		print(first_index+1," ",last_index)
+		for i in range(first_index+1,last_index):
+			path_follow = path.get_child(i)
+			if (path.get_child(i-1).progress - path_follow.progress) < spacing_between_spawn or _level_ended:
+				path_follow.progress = path.get_child(i-1).progress - spacing_between_spawn
+			if path_follow.progress_ratio == 1.0:
+				handle_ball_reached_the_end(path_follow)
 		
-	for i in range(_biggest_connected_ball_indexes[0]+1,len(path.get_children())):
-		path_follow = path.get_child(i)
-		if (path.get_child(i-1).progress - path_follow.progress) > spacing_between_spawn or _level_ended:
-			path_follow.progress = path.get_child(i-1).progress - spacing_between_spawn
-		if path_follow.progress_ratio == 1.0:
-			handle_ball_reached_the_end(path_follow)
 	if path.get_child(-1).progress >= spacing_between_spawn:
 		_can_spawn = true
 
