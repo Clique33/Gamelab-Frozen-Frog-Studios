@@ -1,14 +1,52 @@
-[gd_scene load_steps=5 format=3 uid="uid://chnt2xhqf1y3f"]
+[gd_scene load_steps=9 format=3 uid="uid://chnt2xhqf1y3f"]
 
 [ext_resource type="Script" uid="uid://cebbd0b4cojs" path="res://scripts/frog.gd" id="1_qyo2l"]
 [ext_resource type="PackedScene" uid="uid://g7tlfbm48buo" path="res://scenes/ball_spawner.tscn" id="2_1g2vb"]
-[ext_resource type="Texture2D" uid="uid://08r183ichjb" path="res://assets/characters.png" id="2_rq8tc"]
+[ext_resource type="Texture2D" uid="uid://cobpkajx41igk" path="res://assets/original/frog.png" id="3_rq8tc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qyo2l"]
 radius = 50.0
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_1g2vb"]
+atlas = ExtResource("3_rq8tc")
+region = Rect2(0, 162, 162, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ybftx"]
+atlas = ExtResource("3_rq8tc")
+region = Rect2(0, 324, 162, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ifle"]
+atlas = ExtResource("3_rq8tc")
+region = Rect2(0, 486, 162, 162)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uu7fg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1g2vb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ybftx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ifle")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1g2vb")
+}],
+"loop": false,
+"name": &"default",
+"speed": 15.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
 [node name="Frog" type="CharacterBody2D"]
 script = ExtResource("1_qyo2l")
+shot_speed = 700
 
 [node name="BallSpawner" parent="." instance=ExtResource("2_1g2vb")]
 
@@ -16,19 +54,45 @@ script = ExtResource("1_qyo2l")
 shape = SubResource("CircleShape2D_qyo2l")
 disabled = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="BaseSprite" type="Sprite2D" parent="."]
 texture_filter = 6
 rotation = -1.5708
-texture = ExtResource("2_rq8tc")
-region_enabled = true
+texture = ExtResource("3_rq8tc")
+hframes = 2
+vframes = 4
+frame = 5
 region_rect = Rect2(1.87135, 1.61895, 106.808, 107.242)
 region_filter_clip_enabled = true
 
+[node name="FrogSprite" type="Sprite2D" parent="."]
+texture_filter = 6
+rotation = -1.5708
+texture = ExtResource("3_rq8tc")
+hframes = 2
+vframes = 4
+region_rect = Rect2(1.87135, 1.61895, 106.808, 107.242)
+region_filter_clip_enabled = true
+
+[node name="TongSprite" type="Sprite2D" parent="."]
+texture_filter = 6
+position = Vector2(30, 1)
+rotation = -1.5708
+texture = ExtResource("3_rq8tc")
+hframes = 2
+vframes = 4
+frame = 1
+region_rect = Rect2(1.87135, 1.61895, 106.808, 107.242)
+region_filter_clip_enabled = true
+
+[node name="FrogAnimated" type="AnimatedSprite2D" parent="."]
+rotation = -1.5708
+sprite_frames = SubResource("SpriteFrames_uu7fg")
+
 [node name="ReadyBallPosition" type="Node2D" parent="."]
-position = Vector2(26, 0)
+position = Vector2(39, 0)
 
 [node name="StandByBallPosition" type="Node2D" parent="."]
-position = Vector2(-26, 0)
+position = Vector2(-39, 0)
 
 [node name="ShotCooldownTimer" type="Timer" parent="."]
 wait_time = 0.05

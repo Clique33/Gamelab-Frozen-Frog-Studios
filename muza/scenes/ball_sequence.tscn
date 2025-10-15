@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://bupuj1dy21088"]
+
+[ext_resource type="Script" uid="uid://cxe2ubqoi7vet" path="res://scripts/ball_sequence.gd" id="1_otijk"]
+[ext_resource type="Script" uid="uid://dot0wwa3q0g6l" path="res://resources/nodes/statemachine.gd" id="2_pyd83"]
+[ext_resource type="Script" uid="uid://bdnmaajyh31u1" path="res://resources/nodes/state.gd" id="3_xjj50"]
+
+[node name="BallSequence" type="Node"]
+script = ExtResource("1_otijk")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_pyd83")
+alphabet = Array[String](["stop", "move_forward", "move_backwards"])
+initial_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://dot0wwa3q0g6l"
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("transitions")]
+script = ExtResource("3_xjj50")
+transitions = {
+"move_backwards": NodePath("../MovingBackwards"),
+"move_forward": NodePath("../MovingForward"),
+"stop": NodePath(".")
+}
+metadata/_custom_type_script = "uid://bdnmaajyh31u1"
+
+[node name="MovingForward" type="Node" parent="StateMachine" node_paths=PackedStringArray("transitions")]
+script = ExtResource("3_xjj50")
+transitions = {
+"move_backwards": NodePath("../MovingBackwards"),
+"move_forward": NodePath("."),
+"stop": NodePath("../Idle")
+}
+metadata/_custom_type_script = "uid://bdnmaajyh31u1"
+
+[node name="MovingBackwards" type="Node" parent="StateMachine" node_paths=PackedStringArray("transitions")]
+script = ExtResource("3_xjj50")
+transitions = {
+"move_backwards": NodePath("."),
+"move_forward": NodePath("../MovingForward"),
+"stop": NodePath("../Idle")
+}
+metadata/_custom_type_script = "uid://bdnmaajyh31u1"

@@ -1,0 +1,108 @@
+[gd_scene load_steps=8 format=3 uid="uid://cqfo4qc5w05jk"]
+
+[ext_resource type="Script" uid="uid://ybhwdsdxqk6n" path="res://scripts/test_scene.gd" id="1_3qnke"]
+[ext_resource type="Texture2D" uid="uid://yvf2iqghqfyt" path="res://assets/original/level1-1.jpg" id="1_7ddre"]
+[ext_resource type="PackedScene" uid="uid://cljo38s36dm54" path="res://scenes/ball_path.tscn" id="1_j8ivh"]
+[ext_resource type="PackedScene" uid="uid://chnt2xhqf1y3f" path="res://scenes/frog.tscn" id="2_nd71p"]
+[ext_resource type="PackedScene" uid="uid://ht6oul4vatgi" path="res://scenes/end_mouth.tscn" id="5_qjeyg"]
+[ext_resource type="Script" uid="uid://cnb1cakqlcf7m" path="res://scripts/victory_screen.gd" id="6_wtsjf"]
+[ext_resource type="FontFile" uid="uid://d05mc8jb0v4b0" path="res://assets/original/fonts/Cancun Regular.ttf" id="7_rnaij"]
+
+[node name="testScene" type="Node2D"]
+script = ExtResource("1_3qnke")
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(640, 360)
+texture = ExtResource("1_7ddre")
+
+[node name="BallPath" parent="." instance=ExtResource("1_j8ivh")]
+z_index = 1
+begining_time = 2.0
+position_in_path_speed = 150
+begin_of_level_speed = 700
+end_of_level_speed = 1000
+spacing_between_spawn = 50.0
+max_number_of_spawned_balls = 10
+
+[node name="Frog" parent="." instance=ExtResource("2_nd71p")]
+z_index = 1
+position = Vector2(648, 343)
+shot_cooldown = 0.2
+
+[node name="EndMouth" parent="." instance=ExtResource("5_qjeyg")]
+position = Vector2(479, 317)
+
+[node name="VictoryLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("canvas_modulate", "message_label")]
+layer = 2
+script = ExtResource("6_wtsjf")
+canvas_modulate = NodePath("CanvasModulate")
+message_label = NodePath("HBoxContainer/VictoryLabel")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="VictoryLayer"]
+color = Color(1, 1, 1, 0)
+
+[node name="ColorRect" type="ColorRect" parent="VictoryLayer"]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.356863, 1, 0.231373, 0.517647)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VictoryLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.0
+offset_top = -11.5
+offset_right = 42.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VictoryLabel" type="Label" parent="VictoryLayer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_rnaij")
+theme_override_font_sizes/font_size = 100
+text = "VICTORY !!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="DefeatLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("canvas_modulate", "message_label")]
+layer = 2
+script = ExtResource("6_wtsjf")
+canvas_modulate = NodePath("CanvasModulate")
+message_label = NodePath("HBoxContainer/DefeatLabel")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="DefeatLayer"]
+color = Color(1, 1, 1, 0)
+
+[node name="ColorRect" type="ColorRect" parent="DefeatLayer"]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.709804, 0.145098, 0, 0.517647)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DefeatLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.0
+offset_top = -11.5
+offset_right = 42.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DefeatLabel" type="Label" parent="DefeatLayer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_rnaij")
+theme_override_font_sizes/font_size = 100
+text = "DEFEAT !!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters = 0
+visible_ratio = 0.0

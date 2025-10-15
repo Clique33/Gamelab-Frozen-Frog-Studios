@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://du4qyx2w6s2ae"]
+
+[ext_resource type="Texture2D" uid="uid://yvf2iqghqfyt" path="res://assets/original/level1-1.jpg" id="1_6e84v"]
+[ext_resource type="Curve2D" uid="uid://q7f4t0xavpa1" path="res://resources/curves/level1-1.tres" id="2_4dvvg"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+texture = ExtResource("1_6e84v")
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(1.47409, 0)
+scale = Vector2(0.995664, 1)
+curve = ExtResource("2_4dvvg")

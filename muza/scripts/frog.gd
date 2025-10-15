@@ -5,6 +5,7 @@ class_name Frog
 @onready var stand_by_ball_position: Node2D = $StandByBallPosition
 @onready var ball_spawner: BallSpawner = $BallSpawner
 @onready var shot_cooldown_timer: Timer = $ShotCooldownTimer
+@onready var frog_animated: AnimatedSprite2D = $FrogAnimated
 
 @export_range(100,10000,50) var shot_speed : int
 @export_range(0.05,10,0.01) var shot_cooldown : float = 0.001:
@@ -14,7 +15,8 @@ class_name Frog
 			shot_cooldown_timer.wait_time = shot_cooldown
 
 func _ready() -> void:
-	ready_ball_position.add_child(ball_spawner.spawn(shot_speed))
+	var ball : Ball = ball_spawner.spawn(shot_speed)
+	ready_ball_position.add_child(ball)
 	stand_by_ball_position.add_child(ball_spawner.spawn(shot_speed))
 	shot_cooldown_timer.wait_time = shot_cooldown
 
@@ -41,6 +43,7 @@ func shoot(at_point : Vector2) -> void:
 	get_parent().add_child(mouth_ball)
 	mouth_ball.global_position = original_position
 	mouth_ball.be_shot(at_point)
+	frog_animated.play("default")
 	shot_cooldown_timer.start()
 
 	give_ball(stand_by_ball_position,ready_ball_position)

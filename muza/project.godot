@@ -11,9 +11,15 @@ config_version=5
 [application]
 
 config/name="MuZa"
-run/main_scene="uid://cqfo4qc5w05jk"
+run/main_scene="uid://boa5actufjfxd"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="viewport"
 
 [input]
 

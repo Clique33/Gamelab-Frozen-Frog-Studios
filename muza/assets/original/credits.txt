@@ -1,0 +1,2 @@
+Sprites originais do Zuma Deluxe retirados de:
+https://github.com/GalaxyShad/Zuma-Deluxe-HD/blob/master/content
