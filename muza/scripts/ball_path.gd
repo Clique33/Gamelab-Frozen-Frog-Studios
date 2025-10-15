@@ -7,6 +7,7 @@ class_name BallPath
 @onready var ball_checker: BallChecker = $BallChecker
 @onready var begin_of_level_timer: Timer = $BeginOfLevelTimer
 
+@export var curve : Curve2D
 @export var begining_time : float = 1.0
 @export_subgroup("Speed")
 @export_range(1,100000,1) var speed : int = 50:
@@ -24,9 +25,10 @@ var _can_spawn : bool = true
 var _level_ended : bool = false
 var _current_speed : float
 var _biggest_connected_ball_indexes : Array[int] = [0]
-var _last_length_connected_ball_indexes : int = 1
+var _previously_biggest_connected_ball_indexes : Array[int]
 
 func _ready() -> void:
+	path.curve = curve
 	begin_of_level_timer.wait_time = begining_time
 	begin_of_level_timer.start()
 	ball_checker.spacing_between_balls = spacing_between_spawn
@@ -63,7 +65,7 @@ func move_last_ball(delta : float, index_last_ball : int = -1, forward : bool = 
 func move_back_combo(delta):
 	if(len(_biggest_connected_ball_indexes) < 2):
 		return 
-	for i in len(_biggest_connected_ball_indexes):
+	for i in len(_biggest_connected_ball_indexes)-1:
 		if (ball_checker.is_combo(_biggest_connected_ball_indexes[i])):
 			move_last_ball(delta,_biggest_connected_ball_indexes[i+1],false)
 
@@ -106,7 +108,6 @@ func move_initial_connected_balls(index : int = 0, forward : bool = true):
 			if path_follow.progress_ratio == 1.0:
 				handle_ball_reached_the_end(path_follow)
 	else:
-		print(first_index+1," ",last_index)
 		for i in range(first_index+1,last_index):
 			path_follow = path.get_child(i)
 			if (path.get_child(i-1).progress - path_follow.progress) < spacing_between_spawn or _level_ended:
@@ -119,7 +120,7 @@ func move_initial_connected_balls(index : int = 0, forward : bool = true):
 
 func update_last_connected_indexes(end_index : int = (len(path.get_children())-1)) -> void:
 	if end_index == (len(path.get_children())-1):
-		_last_length_connected_ball_indexes = len(_biggest_connected_ball_indexes)
+		_previously_biggest_connected_ball_indexes =_biggest_connected_ball_indexes.duplicate()
 		_biggest_connected_ball_indexes = []
 	for i in range(end_index,0,-1):
 		if (path.get_child(i-1).progress - path.get_child(i).progress) > spacing_between_spawn*1.02:
@@ -127,6 +128,18 @@ func update_last_connected_indexes(end_index : int = (len(path.get_children())-1
 			update_last_connected_indexes(i-1)
 			return
 	_biggest_connected_ball_indexes.append(0)
+	
+	if _previously_biggest_connected_ball_indexes != _previously_biggest_connected_ball_indexes:
+		print("_biggest_connected_ball_indexes : ",_biggest_connected_ball_indexes)
+		print("_previously_biggest_connected_ball_indexes : ",_previously_biggest_connected_ball_indexes)
+		
+	for index in _biggest_connected_ball_indexes:
+		if index in _previously_biggest_connected_ball_indexes:
+			_previously_biggest_connected_ball_indexes.erase(index)
+	
+	if not _previously_biggest_connected_ball_indexes.is_empty():
+		_on_ball_positioned(path.get_child(0).get_child(0))
+	
 
 func end_of_level():
 	speed = end_of_level_speed
@@ -180,7 +193,6 @@ func put_ball_on_path(new_ball : Ball, after_ball : Ball) -> void:
 func handle_destroy_balls(ball : Ball):
 	var min_max = (ball_checker.indexes_of_same_color_cluster(ball.get_parent().get_index()))
 	if (ball_checker.is_deletable(min_max)):
-		#print(min_max)
 		for i in range(min_max[0],min_max[1]+1):
 			path.get_child(i).queue_free()
 

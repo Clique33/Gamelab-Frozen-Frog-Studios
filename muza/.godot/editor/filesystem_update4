@@ -1,6 +1,8 @@
-res://scenes/ball.tscn
-res://scenes/ball_path.tscn
 res://scenes/test_scene.tscn
+res://scenes/ball.tscn
 res://scripts/ball_path.gd
-res://scripts/ball.gd
-res://scripts/ball_checker.gd
+res://scenes/frog.tscn
+res://scenes/ball_sequence.tscn
+res://scenes/node_2d.tscn
+res://scenes/ball_path.tscn
+res://resources/test_curve_of_ball_path.tres
