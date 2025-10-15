@@ -19,13 +19,16 @@ class_name BallPath
 @export_range(1,100000,1) var end_of_level_speed : int = 400
 @export_category("Spacing")
 @export var spacing_between_spawn : float = 10
+@export var max_number_of_spawned_balls : int = 100 
 
 var biggest_progress : float = 0
 var number_of_balls_in_path : int = 0
 var _can_spawn : bool = true
-var _level_ended : bool = false
+var _level_lost : bool = false
+var _game_is_winnable : bool = false
 var _current_speed : float
 var _biggest_connected_ball_indexes : Array[int] = [0]
+var _number_of_spawned_balls : int = 0
 var _previously_biggest_connected_ball_indexes : Array[int]
 
 func _ready() -> void:
@@ -38,10 +41,9 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	update_progress_towards_defeat()
-	if _level_ended:
+	if _level_lost:
 		end_of_level()
-	elif _can_spawn:
-		spawn_ball_at_begining()
+	spawn_ball_at_begining()
 	update_last_connected_indexes()
 	move_last_ball(delta)
 	move_initial_connected_balls()
@@ -49,6 +51,11 @@ func _process(delta: float) -> void:
 	move_back_combo(delta)
 	for i in range(1,len(_biggest_connected_ball_indexes)):
 		move_initial_connected_balls(i,false)
+
+func check_if_won() -> bool:
+	if _game_is_winnable and path.get_child_count() == 0:
+		return true
+	return false
 
 func update_progress_towards_defeat() -> void:
 	if path.get_child_count() == 0:
@@ -112,14 +119,14 @@ func move_initial_connected_balls(index : int = 0, forward : bool = true):
 	if forward:
 		for i in range(first_index+1,last_index):
 			path_follow = path.get_child(i)
-			if (path.get_child(i-1).progress - path_follow.progress) > spacing_between_spawn or _level_ended:
+			if (path.get_child(i-1).progress - path_follow.progress) > spacing_between_spawn or _level_lost:
 				path_follow.progress = path.get_child(i-1).progress - spacing_between_spawn
 			if path_follow.progress_ratio == 1.0:
 				handle_ball_reached_the_end(path_follow)
 	else:
 		for i in range(first_index+1,last_index):
 			path_follow = path.get_child(i)
-			if (path.get_child(i-1).progress - path_follow.progress) < spacing_between_spawn or _level_ended:
+			if (path.get_child(i-1).progress - path_follow.progress) < spacing_between_spawn or _level_lost:
 				path_follow.progress = path.get_child(i-1).progress - spacing_between_spawn
 			if path_follow.progress_ratio == 1.0:
 				handle_ball_reached_the_end(path_follow)
@@ -167,7 +174,12 @@ func create_new_path_follow(after_index : int = -1, progress : float = 0):
 	return path_follow
 
 func spawn_ball_at_begining():
+	if not _can_spawn:
+		return
+	if _number_of_spawned_balls >= max_number_of_spawned_balls:
+		return
 	_can_spawn = false
+	_number_of_spawned_balls += 1
 	var path_follow_for_spawned_ball : PathFollow2D = create_new_path_follow()
 	var new_ball : Ball = ball_spawner.spawn(500,-PI/2)
 	new_ball.connect("ball_hit",_on_path_ball_hit)
@@ -205,7 +217,7 @@ func handle_destroy_balls(ball : Ball):
 			path.get_child(i).queue_free()
 
 func handle_ball_reached_the_end(path_follow : PathFollow2D):
-	_level_ended = true
+	_level_lost = true
 	if path_follow:
 		path_follow.queue_free()
 	number_of_balls_in_path = path.get_child_count()
@@ -227,6 +239,7 @@ func _on_ball_entered_tree(node : Node):
 
 func _on_begin_of_level_timer_timeout() -> void:
 	_current_speed = speed
+	_game_is_winnable = true
 
 func _on_ball_positioned(ball : Ball) -> void:
 	handle_destroy_balls(ball)
