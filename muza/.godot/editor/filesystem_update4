@@ -6,3 +6,7 @@ res://scenes/ball_sequence.tscn
 res://scenes/node_2d.tscn
 res://scenes/ball_path.tscn
 res://resources/test_curve_of_ball_path.tres
+res://scenes/end_mouth.tscn
+res://assets/original/credits.txt
+res://scripts/end_mouth.gd
+res://scripts/test_scene.gd

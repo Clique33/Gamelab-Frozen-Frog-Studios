@@ -1,11 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://cqfo4qc5w05jk"]
+[gd_scene load_steps=7 format=3 uid="uid://cqfo4qc5w05jk"]
 
+[ext_resource type="Script" uid="uid://ybhwdsdxqk6n" path="res://scripts/test_scene.gd" id="1_3qnke"]
 [ext_resource type="Texture2D" uid="uid://yvf2iqghqfyt" path="res://assets/original/level1-1.jpg" id="1_7ddre"]
 [ext_resource type="PackedScene" uid="uid://cljo38s36dm54" path="res://scenes/ball_path.tscn" id="1_j8ivh"]
 [ext_resource type="Curve2D" uid="uid://q7f4t0xavpa1" path="res://resources/curves/level1-1.tres" id="2_7ddre"]
 [ext_resource type="PackedScene" uid="uid://chnt2xhqf1y3f" path="res://scenes/frog.tscn" id="2_nd71p"]
+[ext_resource type="PackedScene" uid="uid://ht6oul4vatgi" path="res://scenes/end_mouth.tscn" id="5_qjeyg"]
 
 [node name="testScene" type="Node2D"]
+script = ExtResource("1_3qnke")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(640, 360)
@@ -15,8 +18,12 @@ texture = ExtResource("1_7ddre")
 curve = ExtResource("2_7ddre")
 begining_time = 2.0
 position_in_path_speed = 150
+begin_of_level_speed = 700
 end_of_level_speed = 500
 
 [node name="Frog" parent="." instance=ExtResource("2_nd71p")]
 position = Vector2(648, 343)
 shot_cooldown = 0.2
+
+[node name="EndMouth" parent="." instance=ExtResource("5_qjeyg")]
+position = Vector2(479, 317)

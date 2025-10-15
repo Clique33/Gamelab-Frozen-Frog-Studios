@@ -20,6 +20,7 @@ class_name BallPath
 @export_category("Spacing")
 @export var spacing_between_spawn : float = 10
 
+var biggest_progress : float = 0
 var number_of_balls_in_path : int = 0
 var _can_spawn : bool = true
 var _level_ended : bool = false
@@ -36,6 +37,7 @@ func _ready() -> void:
 	_current_speed = begin_of_level_speed
 
 func _process(delta: float) -> void:
+	update_progress_towards_defeat()
 	if _level_ended:
 		end_of_level()
 	elif _can_spawn:
@@ -47,6 +49,13 @@ func _process(delta: float) -> void:
 	move_back_combo(delta)
 	for i in range(1,len(_biggest_connected_ball_indexes)):
 		move_initial_connected_balls(i,false)
+
+func update_progress_towards_defeat() -> void:
+	if path.get_child_count() == 0:
+		biggest_progress = 0
+		return 
+	
+	biggest_progress = path.get_child(0).progress_ratio
 
 func move_last_ball(delta : float, index_last_ball : int = -1, forward : bool = true) -> void:
 	if path.get_child_count() == 0:
