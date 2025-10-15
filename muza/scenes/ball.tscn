@@ -2127,6 +2127,7 @@ animation = &"yellow"
 shape = SubResource("CircleShape2D_dqebh")
 
 [node name="Label" type="Label" parent="."]
+visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 
