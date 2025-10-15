@@ -158,7 +158,6 @@ func create_new_path_follow(after_index : int = -1, progress : float = 0):
 	var path_follow : PathFollow2D = PathFollow2D.new()
 	path_follow.connect("child_entered_tree",_on_ball_entered_tree)
 	path_follow.loop = false
-	path_follow.rotates = false
 	path_follow.progress = progress
 	
 	if path.get_child_count() == 0:
@@ -170,7 +169,7 @@ func create_new_path_follow(after_index : int = -1, progress : float = 0):
 func spawn_ball_at_begining():
 	_can_spawn = false
 	var path_follow_for_spawned_ball : PathFollow2D = create_new_path_follow()
-	var new_ball : Ball = ball_spawner.spawn()
+	var new_ball : Ball = ball_spawner.spawn(500,-PI/2)
 	new_ball.connect("ball_hit",_on_path_ball_hit)
 	path_follow_for_spawned_ball.add_child(new_ball)
 
@@ -184,9 +183,9 @@ func position_ball_on_path(ball : Ball, at_position : Vector2):
 	ball.set_deferred("global_position",curr_global_position)
 	ball.call_deferred("stop")
 	var tween : Tween = create_tween()
-	tween.tween_property(ball,"global_position",at_position,0.2)
+	tween.tween_property(ball,"global_position",at_position,0.4)
 	tween.connect("finished",ball.tween_finished_emitter)
-	create_tween().tween_property(self,"_current_speed",speed,0.2)
+	create_tween().tween_property(self,"_current_speed",speed,0.4)
 
 func put_ball_on_path(new_ball : Ball, after_ball : Ball) -> void:
 	var path_follow_for_spawned_ball : PathFollow2D

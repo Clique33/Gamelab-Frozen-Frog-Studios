@@ -10,3 +10,5 @@ res://scenes/end_mouth.tscn
 res://assets/original/credits.txt
 res://scripts/end_mouth.gd
 res://scripts/test_scene.gd
+res://scripts/ball.gd
+res://scripts/ball_spawner.gd

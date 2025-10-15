@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cljo38s36dm54"]
+[gd_scene load_steps=7 format=3 uid="uid://cljo38s36dm54"]
 
 [ext_resource type="Script" uid="uid://rtavr1qgdwd0" path="res://scripts/ball_path.gd" id="1_adnxe"]
 [ext_resource type="PackedScene" uid="uid://g7tlfbm48buo" path="res://scenes/ball_spawner.tscn" id="1_qps0i"]
+[ext_resource type="Curve2D" uid="uid://q7f4t0xavpa1" path="res://resources/curves/level1-1.tres" id="2_ynb3u"]
 [ext_resource type="Script" uid="uid://es56jq0esbp8" path="res://scripts/ball_checker.gd" id="3_adnxe"]
 
 [sub_resource type="Curve2D" id="Curve2D_hdgg0"]
@@ -15,6 +16,7 @@ radius = 11.0
 
 [node name="BallPath" type="Node2D"]
 script = ExtResource("1_adnxe")
+curve = ExtResource("2_ynb3u")
 spacing_between_spawn = 25.0
 
 [node name="Path" type="Path2D" parent="."]

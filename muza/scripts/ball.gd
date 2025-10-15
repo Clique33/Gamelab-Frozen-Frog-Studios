@@ -1,10 +1,11 @@
 extends CharacterBody2D
 class_name Ball
 
-enum Colors{YELLOW = 0xffffffff, RED = 0xff1c76ff, GREEN = 0x00ff00ff}
+enum Colors{YELLOW, RED, GREEN, BLUE, PURPLE, SILVER}
 enum Owner{FROG, PATH}
 
 @onready var label: Label = $Label
+@onready var ball_animated: AnimatedSprite2D = $BallAnimated
 
 signal ball_hit(path_ball, frog_ball)
 signal tween_finished(ball : Ball)
@@ -14,10 +15,23 @@ signal ball_left(path_ball, frog_ball)
 @export var color : Colors = Colors.YELLOW:
 	set(value):
 		color = value
-		self.modulate = color
+		if ball_animated:
+			ball_animated.play(_colors_to_animations[color])
 
 var ball_owner : Owner
 var _is_shot : bool = false
+static var _colors_to_animations : Dictionary[Colors,String] = {
+									Colors.YELLOW : "yellow",
+									Colors.RED : "red",
+									Colors.GREEN : "green",
+									Colors.BLUE : "blue",
+									Colors.PURPLE : "purple",
+									Colors.SILVER : "silver"
+								}
+
+func _ready() -> void:
+	ball_animated.play(_colors_to_animations[color])
+	ball_animated.play()
 
 func _physics_process(_delta: float) -> void:
 	label.global_position = global_position + Vector2(15,15)
