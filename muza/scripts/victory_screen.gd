@@ -3,6 +3,7 @@ class_name EndScreen
 
 @export var canvas_modulate: CanvasModulate
 @export var message_label: Label
+@export var main_menu: PackedScene
 
 @export var transition_duration : float = 2.0
 @export var text_duration : float = 2.0
@@ -28,4 +29,4 @@ func _input(event: InputEvent) -> void:
 	if not _enable_go_back:
 		return
 	if Input.is_action_just_pressed("ui_accept"):
-		get_tree().quit()
+		get_tree().change_scene_to_packed(main_menu)

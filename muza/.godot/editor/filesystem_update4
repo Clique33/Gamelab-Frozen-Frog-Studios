@@ -10,3 +10,7 @@ res://scenes/ball_spawner.tscn
 res://scripts/victory_screen.gd
 res://scripts/ball_path.gd
 res://scripts/test_scene.gd
+res://scenes/menu_inicial.tscn
+res://scripts/menu_inicial.gd
+res://scenes/main_menu.tscn
+res://scenes/level1.tscn

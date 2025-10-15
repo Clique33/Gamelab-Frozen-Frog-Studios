@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cqfo4qc5w05jk"]
+[gd_scene load_steps=10 format=3 uid="uid://cqfo4qc5w05jk"]
 
 [ext_resource type="Script" uid="uid://ybhwdsdxqk6n" path="res://scripts/test_scene.gd" id="1_3qnke"]
 [ext_resource type="Texture2D" uid="uid://yvf2iqghqfyt" path="res://assets/original/level1-1.jpg" id="1_7ddre"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ht6oul4vatgi" path="res://scenes/end_mouth.tscn" id="5_qjeyg"]
 [ext_resource type="PackedScene" uid="uid://bg0gjlojdhjwg" path="res://scenes/end_screen.tscn" id="6_rnaij"]
 [ext_resource type="Script" uid="uid://cnb1cakqlcf7m" path="res://scripts/victory_screen.gd" id="6_wtsjf"]
+[ext_resource type="PackedScene" uid="uid://boa5actufjfxd" path="res://scenes/main_menu.tscn" id="7_h3xc6"]
 [ext_resource type="FontFile" uid="uid://d05mc8jb0v4b0" path="res://assets/original/fonts/Cancun Regular.ttf" id="7_rnaij"]
 
 [node name="testScene" type="Node2D"]
@@ -21,10 +22,10 @@ texture = ExtResource("1_7ddre")
 z_index = 1
 begining_time = 2.0
 position_in_path_speed = 150
-begin_of_level_speed = 2000
+begin_of_level_speed = 1000
 end_of_level_speed = 1000
 spacing_between_spawn = 50.0
-max_number_of_spawned_balls = 10
+max_number_of_spawned_balls = 50
 
 [node name="Frog" parent="." instance=ExtResource("2_nd71p")]
 z_index = 1
@@ -35,12 +36,14 @@ shot_cooldown = 0.2
 position = Vector2(479, 317)
 
 [node name="VictoryLayer" parent="." instance=ExtResource("6_rnaij")]
+main_menu = ExtResource("7_h3xc6")
 
 [node name="DefeatLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("canvas_modulate", "message_label")]
 layer = 2
 script = ExtResource("6_wtsjf")
 canvas_modulate = NodePath("DefeatModulate")
 message_label = NodePath("HBoxContainer/DefeatLabel")
+main_menu = ExtResource("7_h3xc6")
 
 [node name="DefeatModulate" type="CanvasModulate" parent="DefeatLayer"]
 color = Color(1, 1, 1, 0)
