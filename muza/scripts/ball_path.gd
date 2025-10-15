@@ -53,7 +53,12 @@ func _process(delta: float) -> void:
 		move_initial_connected_balls(i,false)
 
 func check_if_won() -> bool:
-	if _game_is_winnable and path.get_child_count() == 0:
+	if _game_is_winnable and (not _level_lost) and path.get_child_count() == 0:
+		return true
+	return false
+
+func check_if_lost() -> bool:
+	if _game_is_winnable and _level_lost and path.get_child_count() == 0:
 		return true
 	return false
 

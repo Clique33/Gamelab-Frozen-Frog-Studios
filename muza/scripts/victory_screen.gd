@@ -1,23 +1,24 @@
 extends CanvasLayer
-class_name VictoryLayer
+class_name EndScreen
 
-@onready var canvas_modulate: CanvasModulate = $CanvasModulate
-@onready var victory_label: Label = $HBoxContainer/VictoryLabel
+@export var canvas_modulate: CanvasModulate
+@export var message_label: Label
 
 @export var transition_duration : float = 2.0
-@export var victory_text_duration : float = 2.0
+@export var text_duration : float = 2.0
 
 
 var _enable_go_back : bool = false
 
-func transition_to_victory_screen():
+func transition_to_screen():
 	var tween : Tween = create_tween()
 	tween.tween_property(canvas_modulate,"color",Color(1.0, 1.0, 1.0, 1.0),transition_duration)
-	tween.connect("finished",show_victory_screen)
+	tween.connect("finished",show_screen)
 	
-func show_victory_screen():
+func show_screen():
 	var tween : Tween = create_tween()
-	tween.tween_property(victory_label,"visible_characters",20,victory_text_duration)
+	print(message_label.text)
+	tween.tween_property(message_label,"visible_characters",20,text_duration)
 	tween.connect("finished",enable_go_back)
 	
 func enable_go_back():
