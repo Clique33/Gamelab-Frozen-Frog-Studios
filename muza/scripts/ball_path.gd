@@ -79,7 +79,7 @@ func move_last_ball(delta : float, index_last_ball : int = -1, forward : bool = 
 	if forward:
 		path_follow.progress += _current_speed*delta
 	else:
-		path_follow.progress -= _current_speed*delta
+		path_follow.progress -= _current_speed*3*delta
 	if  path_follow.progress_ratio == 1.0:
 		handle_ball_reached_the_end(path_follow)
 	

@@ -14,3 +14,5 @@ res://scenes/menu_inicial.tscn
 res://scripts/menu_inicial.gd
 res://scenes/main_menu.tscn
 res://scenes/level1.tscn
+res://scripts/ball.gd
+res://scripts/frog.gd
