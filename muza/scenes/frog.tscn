@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://chnt2xhqf1y3f"]
+[gd_scene load_steps=16 format=3 uid="uid://chnt2xhqf1y3f"]
 
 [ext_resource type="Script" uid="uid://cebbd0b4cojs" path="res://scripts/frog.gd" id="1_qyo2l"]
 [ext_resource type="PackedScene" uid="uid://g7tlfbm48buo" path="res://scenes/ball_spawner.tscn" id="2_1g2vb"]
@@ -6,6 +6,81 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qyo2l"]
 radius = 50.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rq8tc"]
+atlas = ExtResource("3_rq8tc")
+region = Rect2(234, 633, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uu7fg"]
+atlas = ExtResource("3_rq8tc")
+region = Rect2(249, 633, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycnbg"]
+atlas = ExtResource("3_rq8tc")
+region = Rect2(294, 633, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqhdc"]
+atlas = ExtResource("3_rq8tc")
+region = Rect2(279, 633, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4au2m"]
+atlas = ExtResource("3_rq8tc")
+region = Rect2(309, 633, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wiiuq"]
+atlas = ExtResource("3_rq8tc")
+region = Rect2(264, 633, 15, 15)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p8yr8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rq8tc")
+}],
+"loop": true,
+"name": &"blue",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uu7fg")
+}],
+"loop": true,
+"name": &"green",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycnbg")
+}],
+"loop": true,
+"name": &"purple",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eqhdc")
+}],
+"loop": true,
+"name": &"red",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4au2m")
+}],
+"loop": true,
+"name": &"silver",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wiiuq")
+}],
+"loop": true,
+"name": &"yellow",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1g2vb"]
 atlas = ExtResource("3_rq8tc")
@@ -83,6 +158,12 @@ vframes = 4
 frame = 1
 region_rect = Rect2(1.87135, 1.61895, 106.808, 107.242)
 region_filter_clip_enabled = true
+
+[node name="GemAnimated" type="AnimatedSprite2D" parent="."]
+position = Vector2(-39, -1)
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_p8yr8")
+animation = &"yellow"
 
 [node name="FrogAnimated" type="AnimatedSprite2D" parent="."]
 rotation = -1.5708

@@ -1,5 +1,6 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1760560276
+::res://::1760623086
+export_presets.cfg::TextFile::-1::1760563421::0::1::::<><><>0<>0<><>::
 icon.svg::CompressedTexture2D/CompressedTexture2D::57736292062406935::1760385287::1760388549::1::::<><><>0<>0<>3760edb1ffbe89d1a5625a2166720df5<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 scene_diagram.tscn::PackedScene/PackedScene::4989899400133098802::1760385287::0::1::::<><><>0<>0<><>::
 ::res://assets/::1760555541
@@ -26,31 +27,31 @@ football.png::CompressedTexture2D/CompressedTexture2D::492897577945209643::17603
 tennis-ball.png::CompressedTexture2D/CompressedTexture2D::8038519751815547760::1760385287::1760388550::1::::<><><>0<>0<>b298abe82f0d3bab749039117e3f17d9<>res://.godot/imported/tennis-ball.png-c92e0855ae719bcb11558178e50b7d3b.ctex::
 volley-ball.png::CompressedTexture2D/CompressedTexture2D::3061530024236925482::1760385287::1760388550::1::::<><><>0<>0<>65b0f76b4e627797a8ebdd37d5c715c0<>res://.godot/imported/volley-ball.png-dedb4b7947361f0591146e116065a346.ctex::
 ::res://resources/::1760555525
-::res://resources/curves/::1760556759
-level1-1.tres::Curve2D::1189437996935125918::1760556759::0::1::::<><><>0<>0<><>::
+::res://resources/curves/::1760562994
+level1-1.tres::Curve2D::1189437996935125918::1760562994::0::1::::<><><>0<>0<><>::
 test_curve_of_ball_path.tres::Curve2D/Curve2D::3079884316630326781::1760555525::0::1::::<><><>0<>0<><>::
 ::res://resources/nodes/::1760555525
 state.gd::GDScript/GDScript::2624552744327348410::1760555525::0::1::::State<>Node<><>0<>0<><>::
 statemachine.gd::GDScript/GDScript::8182687408432228617::1760555525::0::1::::StateMachine<>Node<><>0<>0<><>::
-::res://scenes/::1760560279
+::res://scenes/::1760563042
 ball.tscn::PackedScene::5549429279324339688::1760560279::0::1::::<><><>0<>0<><>::uid://cuujeg1qjg3gm::::res://scripts/ball.gd<>uid://c2hviswpbkq1j::::res://assets/original/gameobjects.png
 ball_path.tscn::PackedScene::5564399849709949265::1760560279::0::1::::<><><>0<>0<><>::uid://rtavr1qgdwd0::::res://scripts/ball_path.gd<>uid://g7tlfbm48buo::::res://scenes/ball_spawner.tscn<>uid://q7f4t0xavpa1::::res://resources/curves/level1-1.tres<>uid://es56jq0esbp8::::res://scripts/ball_checker.gd
 ball_sequence.tscn::PackedScene::3822395006134218919::1760560279::0::1::::<><><>0<>0<><>::uid://cxe2ubqoi7vet::::res://scripts/ball_sequence.gd<>uid://dot0wwa3q0g6l::::res://resources/nodes/statemachine.gd<>uid://bdnmaajyh31u1::::res://resources/nodes/state.gd
 ball_spawner.tscn::PackedScene::488366681300456658::1760560279::0::1::::<><><>0<>0<><>::uid://b6ti3th78lweq::::res://scripts/ball_spawner.gd
 end_mouth.tscn::PackedScene::532453379489355344::1760560279::0::1::::<><><>0<>0<><>::uid://dn4mjuk8wrnvg::::res://scripts/end_mouth.gd<>uid://c2hviswpbkq1j::::res://assets/original/gameobjects.png
-end_screen.tscn::PackedScene::2859544163271860126::1760559103::0::1::::<><><>0<>0<><>::uid://cnb1cakqlcf7m::::res://scripts/victory_screen.gd<>uid://d05mc8jb0v4b0::::res://assets/original/fonts/Cancun Regular.ttf
+end_screen.tscn::PackedScene/PackedScene::2859544163271860126::1760559103::0::1::::<><><>0<>0<><>::uid://cnb1cakqlcf7m::::res://scripts/victory_screen.gd<>uid://d05mc8jb0v4b0::::res://assets/original/fonts/Cancun Regular.ttf
 frog.tscn::PackedScene::5292203242538584189::1760560279::0::1::::<><><>0<>0<><>::uid://cebbd0b4cojs::::res://scripts/frog.gd<>uid://g7tlfbm48buo::::res://scenes/ball_spawner.tscn<>uid://cobpkajx41igk::::res://assets/original/frog.png
-main_menu.tscn::PackedScene::3370886139722283005::1760560279::0::1::::<><><>0<>0<><>::uid://sh1ci7fjveo3::::res://scripts/menu_inicial.gd<>uid://cpckp7vy85qem::::res://assets/original/menu.png
+level1.tscn::PackedScene::5907087425143682460::1760563042::0::1::::<><><>0<>0<><>::uid://ybhwdsdxqk6n::::res://scripts/test_scene.gd<>uid://yvf2iqghqfyt::::res://assets/original/level1-1.jpg<>uid://cljo38s36dm54::::res://scenes/ball_path.tscn<>uid://chnt2xhqf1y3f::::res://scenes/frog.tscn<>uid://ht6oul4vatgi::::res://scenes/end_mouth.tscn<>uid://bg0gjlojdhjwg::::res://scenes/end_screen.tscn<>uid://cnb1cakqlcf7m::::res://scripts/victory_screen.gd<>uid://boa5actufjfxd::::res://scenes/main_menu.tscn<>uid://d05mc8jb0v4b0::::res://assets/original/fonts/Cancun Regular.ttf
+main_menu.tscn::PackedScene::3370886139722283005::1760563042::0::1::::<><><>0<>0<><>::uid://sh1ci7fjveo3::::res://scripts/menu_inicial.gd<>uid://cpckp7vy85qem::::res://assets/original/menu.png
 node_2d.tscn::PackedScene::8623921460434182256::1760560279::0::1::::<><><>0<>0<><>::uid://yvf2iqghqfyt::::res://assets/original/level1-1.jpg<>uid://q7f4t0xavpa1::::res://resources/curves/level1-1.tres
-test_scene.tscn::PackedScene::5907087425143682460::1760560279::0::1::::<><><>0<>0<><>::uid://ybhwdsdxqk6n::::res://scripts/test_scene.gd<>uid://yvf2iqghqfyt::::res://assets/original/level1-1.jpg<>uid://cljo38s36dm54::::res://scenes/ball_path.tscn<>uid://chnt2xhqf1y3f::::res://scenes/frog.tscn<>uid://ht6oul4vatgi::::res://scenes/end_mouth.tscn<>uid://bg0gjlojdhjwg::::res://scenes/end_screen.tscn<>uid://cnb1cakqlcf7m::::res://scripts/victory_screen.gd<>uid://boa5actufjfxd::::res://scenes/main_menu.tscn<>uid://d05mc8jb0v4b0::::res://assets/original/fonts/Cancun Regular.ttf
-::res://scripts/::1760560107
-ball.gd::GDScript/GDScript::6218459747382840968::1760555525::0::1::::Ball<>CharacterBody2D<><>0<>0<><>::
+::res://scripts/::1760563042
+ball.gd::GDScript::6218459747382840968::1760562989::0::1::::Ball<>CharacterBody2D<><>0<>0<><>::
 ball_checker.gd::GDScript/GDScript::319791542088213267::1760388815::0::1::::BallChecker<>Node<><>0<>0<><>::
-ball_path.gd::GDScript::1232471954642684623::1760559042::0::1::::BallPath<>Node2D<><>0<>0<><>::
+ball_path.gd::GDScript::1232471954642684623::1760563042::0::1::::BallPath<>Node2D<><>0<>0<><>::
 ball_sequence.gd::GDScript/GDScript::6397117434648268079::1760555518::0::1::::BallSequence<>Node<><>0<>0<><>::
 ball_spawner.gd::GDScript/GDScript::4602034762226483736::1760556501::0::1::::BallSpawner<>Node<><>0<>0<><>::
 end_mouth.gd::GDScript/GDScript::8132329716744298636::1760555525::0::1::::EndMouth<>Node2D<><>0<>0<><>::
-frog.gd::GDScript/GDScript::148697897353420348::1760556298::0::1::::Frog<>Node2D<><>0<>0<><>::
-menu_inicial.gd::GDScript::1279432513023316320::1760559685::0::1::::<>CanvasLayer<><>0<>0<><>::
+frog.gd::GDScript::148697897353420348::1760562830::0::1::::Frog<>Node2D<><>0<>0<><>::
+menu_inicial.gd::GDScript::1279432513023316320::1760560958::0::1::::MainMenu<>CanvasLayer<><>0<>0<><>::
 test_scene.gd::GDScript::1687061117026323363::1760559042::0::1::::<>Node2D<><>0<>0<><>::
 victory_screen.gd::GDScript::5688942942024216864::1760560107::0::1::::EndScreen<>CanvasLayer<><>0<>0<><>::
