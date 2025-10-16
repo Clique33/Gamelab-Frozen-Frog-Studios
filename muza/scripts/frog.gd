@@ -6,6 +6,7 @@ class_name Frog
 @onready var ball_spawner: BallSpawner = $BallSpawner
 @onready var shot_cooldown_timer: Timer = $ShotCooldownTimer
 @onready var frog_animated: AnimatedSprite2D = $FrogAnimated
+@onready var gem_animated: AnimatedSprite2D = $GemAnimated
 
 @export_range(100,10000,50) var shot_speed : int
 @export_range(0.05,10,0.01) var shot_cooldown : float = 0.001:
@@ -17,7 +18,10 @@ class_name Frog
 func _ready() -> void:
 	var ball : Ball = ball_spawner.spawn(shot_speed)
 	ready_ball_position.add_child(ball)
-	stand_by_ball_position.add_child(ball_spawner.spawn(shot_speed))
+	ball = ball_spawner.spawn(shot_speed)
+	ball.visible = false
+	stand_by_ball_position.add_child(ball)
+	gem_animated.play(Ball._colors_to_animations[ball.color])
 	shot_cooldown_timer.wait_time = shot_cooldown
 
 func _physics_process(_delta: float) -> void:
@@ -35,6 +39,9 @@ func give_ball(from_node : Node, to_node : Node) -> void:
 func swap_balls() -> void:
 	give_ball(ready_ball_position,stand_by_ball_position)
 	give_ball(stand_by_ball_position,ready_ball_position)
+	ready_ball_position.get_child(0).visible = true
+	stand_by_ball_position.get_child(0).visible = false
+	gem_animated.play(Ball._colors_to_animations[stand_by_ball_position.get_child(0).color])
 
 func shoot(at_point : Vector2) -> void:
 	var mouth_ball : Ball = ready_ball_position.get_child(0)
@@ -45,6 +52,9 @@ func shoot(at_point : Vector2) -> void:
 	mouth_ball.be_shot(at_point)
 	frog_animated.play("default")
 	shot_cooldown_timer.start()
-
 	give_ball(stand_by_ball_position,ready_ball_position)
-	stand_by_ball_position.add_child(ball_spawner.spawn(shot_speed))
+	ready_ball_position.get_child(0).visible = true
+	var ball : Ball = ball_spawner.spawn(shot_speed)
+	ball.visible = false
+	stand_by_ball_position.add_child(ball)
+	gem_animated.play(Ball._colors_to_animations[ball.color])
