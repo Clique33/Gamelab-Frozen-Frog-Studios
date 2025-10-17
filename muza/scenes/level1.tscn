@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://cqfo4qc5w05jk"]
+[gd_scene load_steps=11 format=3 uid="uid://cqfo4qc5w05jk"]
 
 [ext_resource type="Script" uid="uid://ybhwdsdxqk6n" path="res://scripts/test_scene.gd" id="1_3qnke"]
 [ext_resource type="Texture2D" uid="uid://yvf2iqghqfyt" path="res://assets/original/level1-1.jpg" id="1_7ddre"]
 [ext_resource type="PackedScene" uid="uid://cljo38s36dm54" path="res://scenes/ball_path.tscn" id="1_j8ivh"]
 [ext_resource type="PackedScene" uid="uid://chnt2xhqf1y3f" path="res://scenes/frog.tscn" id="2_nd71p"]
 [ext_resource type="PackedScene" uid="uid://ht6oul4vatgi" path="res://scenes/end_mouth.tscn" id="5_qjeyg"]
+[ext_resource type="PackedScene" uid="uid://d3vohyu7kppou" path="res://scenes/hud_layer.tscn" id="6_d3jkd"]
 [ext_resource type="PackedScene" uid="uid://bg0gjlojdhjwg" path="res://scenes/end_screen.tscn" id="6_rnaij"]
-[ext_resource type="Script" uid="uid://cnb1cakqlcf7m" path="res://scripts/victory_screen.gd" id="6_wtsjf"]
+[ext_resource type="Script" uid="uid://cnb1cakqlcf7m" path="res://scripts/end_screen.gd" id="6_wtsjf"]
 [ext_resource type="PackedScene" uid="uid://boa5actufjfxd" path="res://scenes/main_menu.tscn" id="7_h3xc6"]
 [ext_resource type="FontFile" uid="uid://d05mc8jb0v4b0" path="res://assets/original/fonts/Cancun Regular.ttf" id="7_rnaij"]
 
@@ -14,12 +15,10 @@
 script = ExtResource("1_3qnke")
 
 [node name="Background" type="Sprite2D" parent="."]
-z_index = -1
 position = Vector2(640, 360)
 texture = ExtResource("1_7ddre")
 
 [node name="BallPath" parent="." instance=ExtResource("1_j8ivh")]
-z_index = 1
 begining_time = 2.0
 position_in_path_speed = 150
 begin_of_level_speed = 1000
@@ -28,18 +27,21 @@ spacing_between_spawn = 50.0
 max_number_of_spawned_balls = 50
 
 [node name="Frog" parent="." instance=ExtResource("2_nd71p")]
-z_index = 1
 position = Vector2(648, 343)
 shot_cooldown = 0.2
 
 [node name="EndMouth" parent="." instance=ExtResource("5_qjeyg")]
 position = Vector2(479, 317)
 
+[node name="HUDLayer" parent="." instance=ExtResource("6_d3jkd")]
+
 [node name="VictoryLayer" parent="." instance=ExtResource("6_rnaij")]
+visible = false
 main_menu = ExtResource("7_h3xc6")
 
 [node name="DefeatLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("canvas_modulate", "message_label")]
 layer = 2
+visible = false
 script = ExtResource("6_wtsjf")
 canvas_modulate = NodePath("DefeatModulate")
 message_label = NodePath("HBoxContainer/DefeatLabel")
@@ -75,3 +77,5 @@ horizontal_alignment = 1
 vertical_alignment = 1
 visible_characters = 0
 visible_ratio = 0.0
+
+[connection signal="go_to_menu" from="HUDLayer" to="." method="_on_hud_layer_go_to_menu"]

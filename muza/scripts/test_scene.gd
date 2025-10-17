@@ -15,3 +15,7 @@ func _process(delta: float) -> void:
 	if ball_path.check_if_lost():
 		defeat_layer.transition_to_screen()
 		ball_path._game_is_winnable = false
+
+
+func _on_hud_layer_go_to_menu() -> void:
+	pass # Replace with function body.
