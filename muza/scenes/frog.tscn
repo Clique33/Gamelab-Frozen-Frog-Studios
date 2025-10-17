@@ -1,8 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://chnt2xhqf1y3f"]
+[gd_scene load_steps=18 format=3 uid="uid://chnt2xhqf1y3f"]
 
 [ext_resource type="Script" uid="uid://cebbd0b4cojs" path="res://scripts/frog.gd" id="1_qyo2l"]
 [ext_resource type="PackedScene" uid="uid://g7tlfbm48buo" path="res://scenes/ball_spawner.tscn" id="2_1g2vb"]
 [ext_resource type="Texture2D" uid="uid://cobpkajx41igk" path="res://assets/original/frog.png" id="3_rq8tc"]
+[ext_resource type="AudioStream" uid="uid://n2w57qn8yygf" path="res://assets/original/sounds/fireball1.ogg" id="4_1g2vb"]
+[ext_resource type="AudioStream" uid="uid://y188fn4h2md3" path="res://assets/original/sounds/button2.ogg" id="5_ybftx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qyo2l"]
 radius = 50.0
@@ -178,3 +180,11 @@ position = Vector2(-39, 0)
 [node name="ShotCooldownTimer" type="Timer" parent="."]
 wait_time = 0.05
 one_shot = true
+
+[node name="SoundEffects" type="Node" parent="."]
+
+[node name="ShotAudioPlayer" type="AudioStreamPlayer2D" parent="SoundEffects"]
+stream = ExtResource("4_1g2vb")
+
+[node name="SwapBallsAudioPlayer" type="AudioStreamPlayer2D" parent="SoundEffects"]
+stream = ExtResource("5_ybftx")

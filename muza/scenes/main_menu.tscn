@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://boa5actufjfxd"]
+[gd_scene load_steps=13 format=3 uid="uid://boa5actufjfxd"]
 
 [ext_resource type="Script" uid="uid://sh1ci7fjveo3" path="res://scripts/menu_inicial.gd" id="1_1lqws"]
 [ext_resource type="Texture2D" uid="uid://cpckp7vy85qem" path="res://assets/original/menu.png" id="1_40mju"]
 [ext_resource type="Script" uid="uid://bfhtx6i4jiq5q" path="res://resources/visual_effects/fade_out_component.gd" id="2_bqqt6"]
+[ext_resource type="AudioStream" uid="uid://dxi1sygxetyv4" path="res://assets/original/sounds/button1.ogg" id="4_wu84c"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8ln24"]
 atlas = ExtResource("1_40mju")
@@ -82,6 +83,11 @@ offset_bottom = 677.0
 texture_normal = SubResource("AtlasTexture_ekxnf")
 texture_pressed = SubResource("AtlasTexture_bqqt6")
 texture_hover = SubResource("AtlasTexture_wu84c")
+
+[node name="SoundEffects" type="Node" parent="."]
+
+[node name="ButtonPressedAudioPlayer" type="AudioStreamPlayer2D" parent="SoundEffects"]
+stream = ExtResource("4_wu84c")
 
 [connection signal="fade_out_finished" from="FadeOutComponent" to="." method="transition_to_game"]
 [connection signal="pressed" from="Control/NewGameButton" to="." method="_on_new_game_button_pressed"]

@@ -5,6 +5,8 @@ signal go_to_menu
 
 @onready var end_game_progress_bar: TextureProgressBar = $EndGameProgressBar
 @onready var end_game_arrived_bar: TextureRect = $EndGameArrivedBar
+@onready var end_of_level_audio_player: AudioStreamPlayer2D = $SoudEffects/EndOfLevelAudioPlayer
+@onready var button_pressed_audio_player: AudioStreamPlayer2D = $SoudEffects/ButtonPressedAudioPlayer
 
 @export var total_number_of_balls : int = 100:
 	set(value):
@@ -19,6 +21,8 @@ func update_progress_of_game(value : int) -> void:
 	if end_game_progress_bar.value == end_game_progress_bar.max_value:
 		end_game_progress_bar.visible = false
 		end_game_arrived_bar.visible = true
+		end_of_level_audio_player.play()
 
 func _on_menu_button_pressed() -> void:
 	emit_signal("go_to_menu")
+	button_pressed_audio_player.play()

@@ -6,6 +6,11 @@ class_name BallPath
 @onready var begining_checker: Area2D = $BeginingChecker
 @onready var ball_checker: BallChecker = $BallChecker
 @onready var begin_of_level_timer: Timer = $BeginOfLevelTimer
+@onready var ball_hit_1_player: AudioStreamPlayer2D = $SoundEffects/BallHit1Player
+@onready var ball_hit_2_player: AudioStreamPlayer2D = $SoundEffects/BallHit2Player
+@onready var level_begin_chant_audio_player: AudioStreamPlayer2D = $"../SoundEffects/LevelBeginChantAudioPlayer"
+@onready var level_begin_rolling_audio_player: AudioStreamPlayer2D = $"../SoundEffects/LevelBeginRollingAudioPlayer"
+@onready var balls_destroyed_audio_player: AudioStreamPlayer2D = $"../SoundEffects/BallsDestroyedAudioPlayer"
 
 signal spawned_ball
 
@@ -32,8 +37,12 @@ var _current_speed : float
 var _biggest_connected_ball_indexes : Array[int] = [0]
 var _number_of_spawned_balls : int = 0
 var _previously_biggest_connected_ball_indexes : Array[int]
+var _ball_hit_players : Array[AudioStreamPlayer2D]
 
 func _ready() -> void:
+	level_begin_chant_audio_player.play()
+	level_begin_rolling_audio_player.play()
+	_ball_hit_players = [ball_hit_1_player,ball_hit_2_player]
 	path.curve = curve
 	begin_of_level_timer.wait_time = begining_time
 	begin_of_level_timer.start()
@@ -223,6 +232,7 @@ func handle_destroy_balls(ball : Ball):
 	if (ball_checker.is_deletable(min_max)):
 		for i in range(min_max[0],min_max[1]+1):
 			path.get_child(i).queue_free()
+		balls_destroyed_audio_player.play()
 
 func handle_ball_reached_the_end(path_follow : PathFollow2D):
 	_level_lost = true
@@ -238,6 +248,7 @@ func _on_path_ball_hit(path_ball : Ball, frog_ball : Ball):
 	frog_ball.label.text = "hit"
 	path_ball.label.text = "hit"
 	_current_speed = position_in_path_speed
+	_ball_hit_players[randi_range(0,len(_ball_hit_players)-1)].play()
 
 func _on_ball_entered_tree(node : Node):
 	var ball : Ball = node
