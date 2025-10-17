@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://d3vohyu7kppou"]
+[gd_scene load_steps=7 format=3 uid="uid://b2uggjxp78gey"]
 
-[ext_resource type="Script" uid="uid://c0pyto2oawkcw" path="res://scripts/hud_layer.gd" id="1_frjao"]
+[ext_resource type="Script" path="res://scripts/hud_layer.gd" id="1_frjao"]
 [ext_resource type="Texture2D" uid="uid://d2wh8r55rd201" path="res://assets/original/gameinterface.png" id="1_hfrov"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u3awl"]
@@ -35,5 +35,9 @@ offset_bottom = 43.0
 texture_normal = SubResource("AtlasTexture_d3jkd")
 texture_pressed = SubResource("AtlasTexture_2ku1j")
 texture_hover = SubResource("AtlasTexture_f31uk")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]

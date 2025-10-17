@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://hflgv7u6i4ta"]
+
+[ext_resource type="Script" uid="uid://bfhtx6i4jiq5q" path="res://resources/visual_effects/fade_out_component.gd" id="1_ewnq4"]
+
+[node name="FadeOutComponent" type="Node"]
+script = ExtResource("1_ewnq4")
