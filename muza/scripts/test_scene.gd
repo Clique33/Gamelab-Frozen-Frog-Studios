@@ -4,6 +4,9 @@ extends Node2D
 @onready var end_mouth: EndMouth = $EndMouth
 @onready var victory_layer: EndScreen = $VictoryLayer
 @onready var defeat_layer: EndScreen = $DefeatLayer
+@onready var hud_fade_out_component: FadeOutComponent = $HUDLayer/HUDFadeOutComponent
+@onready var fade_out_component: FadeOutComponent = $FadeOutComponent
+
 
 
 
@@ -18,4 +21,8 @@ func _process(delta: float) -> void:
 
 
 func _on_hud_layer_go_to_menu() -> void:
-	pass # Replace with function body.
+	fade_out_component.fade_out(go_to_main_menu)
+	hud_fade_out_component.fade_out()
+
+func go_to_main_menu() -> void:
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

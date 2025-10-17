@@ -1,11 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://cqfo4qc5w05jk"]
+[gd_scene load_steps=12 format=3 uid="uid://cqfo4qc5w05jk"]
 
 [ext_resource type="Script" uid="uid://ybhwdsdxqk6n" path="res://scripts/test_scene.gd" id="1_3qnke"]
 [ext_resource type="Texture2D" uid="uid://yvf2iqghqfyt" path="res://assets/original/level1-1.jpg" id="1_7ddre"]
 [ext_resource type="PackedScene" uid="uid://cljo38s36dm54" path="res://scenes/ball_path.tscn" id="1_j8ivh"]
 [ext_resource type="PackedScene" uid="uid://chnt2xhqf1y3f" path="res://scenes/frog.tscn" id="2_nd71p"]
+[ext_resource type="Script" uid="uid://bfhtx6i4jiq5q" path="res://resources/visual_effects/fade_out_component.gd" id="2_u3awl"]
 [ext_resource type="PackedScene" uid="uid://ht6oul4vatgi" path="res://scenes/end_mouth.tscn" id="5_qjeyg"]
-[ext_resource type="PackedScene" uid="uid://d3vohyu7kppou" path="res://scenes/hud_layer.tscn" id="6_d3jkd"]
+[ext_resource type="PackedScene" path="res://scenes/hud_layer.tscn" id="6_d3jkd"]
 [ext_resource type="PackedScene" uid="uid://bg0gjlojdhjwg" path="res://scenes/end_screen.tscn" id="6_rnaij"]
 [ext_resource type="Script" uid="uid://cnb1cakqlcf7m" path="res://scripts/end_screen.gd" id="6_wtsjf"]
 [ext_resource type="PackedScene" uid="uid://boa5actufjfxd" path="res://scenes/main_menu.tscn" id="7_h3xc6"]
@@ -13,6 +14,12 @@
 
 [node name="testScene" type="Node2D"]
 script = ExtResource("1_3qnke")
+
+[node name="FadeOutComponent" type="Node" parent="."]
+script = ExtResource("2_u3awl")
+duration = 1.0
+duration_to_wait_after_fade = 0.5
+metadata/_custom_type_script = "uid://bfhtx6i4jiq5q"
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(640, 360)
@@ -34,6 +41,12 @@ shot_cooldown = 0.2
 position = Vector2(479, 317)
 
 [node name="HUDLayer" parent="." instance=ExtResource("6_d3jkd")]
+
+[node name="HUDFadeOutComponent" type="Node" parent="HUDLayer"]
+script = ExtResource("2_u3awl")
+duration = 1.0
+duration_to_wait_after_fade = 0.5
+metadata/_custom_type_script = "uid://bfhtx6i4jiq5q"
 
 [node name="VictoryLayer" parent="." instance=ExtResource("6_rnaij")]
 visible = false
