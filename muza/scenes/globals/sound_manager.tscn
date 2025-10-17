@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0sgujibg0gt1"]
+
+[ext_resource type="AudioStream" uid="uid://bo4vs1d2sxva5" path="res://assets/original/songs/zuma.mp3" id="1_5eifr"]
+
+[node name="SoundManager" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_5eifr")
+autoplay = true
+stream_paused = true

@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://cljo38s36dm54"]
+[gd_scene load_steps=9 format=3 uid="uid://cljo38s36dm54"]
 
 [ext_resource type="Script" uid="uid://rtavr1qgdwd0" path="res://scripts/ball_path.gd" id="1_adnxe"]
 [ext_resource type="PackedScene" uid="uid://g7tlfbm48buo" path="res://scenes/ball_spawner.tscn" id="1_qps0i"]
 [ext_resource type="Curve2D" uid="uid://q7f4t0xavpa1" path="res://resources/curves/level1-1.tres" id="2_ynb3u"]
 [ext_resource type="Script" uid="uid://es56jq0esbp8" path="res://scripts/ball_checker.gd" id="3_adnxe"]
+[ext_resource type="AudioStream" uid="uid://bc7gxfiv5xo64" path="res://assets/original/sounds/ballclick1.ogg" id="5_7wwwp"]
+[ext_resource type="AudioStream" uid="uid://dp42rel2uirq7" path="res://assets/original/sounds/ballclick2.ogg" id="6_fymlj"]
 
 [sub_resource type="Curve2D" id="Curve2D_hdgg0"]
 _data = {
@@ -37,5 +39,13 @@ metadata/_custom_type_script = "uid://es56jq0esbp8"
 
 [node name="BeginOfLevelTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="SoundEffects" type="Node" parent="."]
+
+[node name="BallHit1Player" type="AudioStreamPlayer2D" parent="SoundEffects"]
+stream = ExtResource("5_7wwwp")
+
+[node name="BallHit2Player" type="AudioStreamPlayer2D" parent="SoundEffects"]
+stream = ExtResource("6_fymlj")
 
 [connection signal="timeout" from="BeginOfLevelTimer" to="." method="_on_begin_of_level_timer_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cqfo4qc5w05jk"]
+[gd_scene load_steps=15 format=3 uid="uid://cqfo4qc5w05jk"]
 
 [ext_resource type="Script" uid="uid://ybhwdsdxqk6n" path="res://scripts/test_scene.gd" id="1_3qnke"]
 [ext_resource type="Texture2D" uid="uid://yvf2iqghqfyt" path="res://assets/original/level1-1.jpg" id="1_7ddre"]
@@ -11,6 +11,9 @@
 [ext_resource type="Script" uid="uid://cnb1cakqlcf7m" path="res://scripts/end_screen.gd" id="6_wtsjf"]
 [ext_resource type="PackedScene" uid="uid://boa5actufjfxd" path="res://scenes/main_menu.tscn" id="7_h3xc6"]
 [ext_resource type="FontFile" uid="uid://d05mc8jb0v4b0" path="res://assets/original/fonts/Cancun Regular.ttf" id="7_rnaij"]
+[ext_resource type="AudioStream" uid="uid://b7qlsuseypqkx" path="res://assets/original/sounds/chant1.ogg" id="12_2ku1j"]
+[ext_resource type="AudioStream" uid="uid://djqlbg14g00xr" path="res://assets/original/sounds/rolling.ogg" id="13_gnai3"]
+[ext_resource type="AudioStream" uid="uid://dj66ma74h585j" path="res://assets/original/sounds/chime1.ogg" id="14_i8kv5"]
 
 [node name="Level1_1" type="Node2D"]
 script = ExtResource("1_3qnke")
@@ -93,6 +96,19 @@ horizontal_alignment = 1
 vertical_alignment = 1
 visible_characters = 0
 visible_ratio = 0.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="DefeatLayer"]
+
+[node name="SoundEffects" type="Node" parent="."]
+
+[node name="LevelBeginChantAudioPlayer" type="AudioStreamPlayer2D" parent="SoundEffects"]
+stream = ExtResource("12_2ku1j")
+
+[node name="LevelBeginRollingAudioPlayer" type="AudioStreamPlayer2D" parent="SoundEffects"]
+stream = ExtResource("13_gnai3")
+
+[node name="BallsDestroyedAudioPlayer" type="AudioStreamPlayer2D" parent="SoundEffects"]
+stream = ExtResource("14_i8kv5")
 
 [connection signal="spawned_ball" from="BallPath" to="." method="_on_ball_path_spawned_ball"]
 [connection signal="go_to_menu" from="HUDLayer" to="." method="_on_hud_layer_go_to_menu"]

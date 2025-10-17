@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://b2uggjxp78gey"]
+[gd_scene load_steps=11 format=3 uid="uid://b2uggjxp78gey"]
 
 [ext_resource type="Script" uid="uid://c0pyto2oawkcw" path="res://scripts/hud_layer.gd" id="1_frjao"]
 [ext_resource type="Texture2D" uid="uid://d2wh8r55rd201" path="res://assets/original/gameinterface.png" id="1_hfrov"]
+[ext_resource type="AudioStream" uid="uid://b478wmpenevcq" path="res://assets/original/sounds/chant4.ogg" id="3_t62ci"]
+[ext_resource type="AudioStream" uid="uid://dxi1sygxetyv4" path="res://assets/original/sounds/button1.ogg" id="4_xqivf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u3awl"]
 atlas = ExtResource("1_hfrov")
@@ -59,5 +61,13 @@ offset_top = 5.0
 offset_right = 868.0
 offset_bottom = 27.0
 texture = SubResource("AtlasTexture_t62ci")
+
+[node name="SoudEffects" type="Node" parent="."]
+
+[node name="EndOfLevelAudioPlayer" type="AudioStreamPlayer2D" parent="SoudEffects"]
+stream = ExtResource("3_t62ci")
+
+[node name="ButtonPressedAudioPlayer" type="AudioStreamPlayer2D" parent="SoudEffects"]
+stream = ExtResource("4_xqivf")
 
 [connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]

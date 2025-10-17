@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bg0gjlojdhjwg"]
+[gd_scene load_steps=4 format=3 uid="uid://bg0gjlojdhjwg"]
 
 [ext_resource type="Script" uid="uid://cnb1cakqlcf7m" path="res://scripts/end_screen.gd" id="1_6e1uj"]
 [ext_resource type="FontFile" uid="uid://d05mc8jb0v4b0" path="res://assets/original/fonts/Cancun Regular.ttf" id="2_jc7ji"]
+[ext_resource type="AudioStream" uid="uid://bman4rnwcjt8" path="res://assets/original/sounds/chant2.ogg" id="3_jc7ji"]
 
 [node name="VictoryLayer" type="CanvasLayer" node_paths=PackedStringArray("canvas_modulate", "message_label")]
 layer = 2
@@ -39,3 +40,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 visible_characters = 0
 visible_ratio = 0.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_jc7ji")
