@@ -7,6 +7,8 @@ class_name BallPath
 @onready var ball_checker: BallChecker = $BallChecker
 @onready var begin_of_level_timer: Timer = $BeginOfLevelTimer
 
+signal spawned_ball
+
 @export var curve : Curve2D
 @export var begining_time : float = 1.0
 @export_subgroup("Speed")
@@ -189,6 +191,7 @@ func spawn_ball_at_begining():
 	var new_ball : Ball = ball_spawner.spawn(500,-PI/2)
 	new_ball.connect("ball_hit",_on_path_ball_hit)
 	path_follow_for_spawned_ball.add_child(new_ball)
+	spawned_ball.emit()
 
 func put_ball_on_path_follow(ball : Ball, path_follow : PathFollow2D):
 	ball.get_parent().remove_child(ball)

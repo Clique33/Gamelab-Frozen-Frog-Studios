@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://boa5actufjfxd" path="res://scenes/main_menu.tscn" id="7_h3xc6"]
 [ext_resource type="FontFile" uid="uid://d05mc8jb0v4b0" path="res://assets/original/fonts/Cancun Regular.ttf" id="7_rnaij"]
 
-[node name="testScene" type="Node2D"]
+[node name="Level1_1" type="Node2D"]
 script = ExtResource("1_3qnke")
 
 [node name="FadeOutComponent" type="Node" parent="."]
@@ -33,7 +33,6 @@ position = Vector2(479, 317)
 [node name="BallPath" parent="." instance=ExtResource("1_j8ivh")]
 z_index = -1
 begining_time = 2.0
-speed = 250
 position_in_path_speed = 150
 begin_of_level_speed = 1000
 end_of_level_speed = 1000
@@ -95,4 +94,5 @@ vertical_alignment = 1
 visible_characters = 0
 visible_ratio = 0.0
 
+[connection signal="spawned_ball" from="BallPath" to="." method="_on_ball_path_spawned_ball"]
 [connection signal="go_to_menu" from="HUDLayer" to="." method="_on_hud_layer_go_to_menu"]
