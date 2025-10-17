@@ -1,7 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://boa5actufjfxd"]
+[gd_scene load_steps=11 format=3 uid="uid://boa5actufjfxd"]
 
 [ext_resource type="Script" uid="uid://sh1ci7fjveo3" path="res://scripts/menu_inicial.gd" id="1_1lqws"]
 [ext_resource type="Texture2D" uid="uid://cpckp7vy85qem" path="res://assets/original/menu.png" id="1_40mju"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ln24"]
+atlas = ExtResource("1_40mju")
+region = Rect2(0, 720, 1280, 720)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1lqws"]
 atlas = ExtResource("1_40mju")
@@ -42,13 +46,13 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ColorRect" type="ColorRect" parent="Control"]
+[node name="Sky" type="TextureRect" parent="Control"]
 layout_mode = 0
-offset_right = 1280.0
-offset_bottom = 720.0
-color = Color(0.709804, 0.372549, 0.537255, 0.572549)
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("AtlasTexture_8ln24")
 
-[node name="TextureRect" type="TextureRect" parent="Control"]
+[node name="BackGround" type="TextureRect" parent="Control"]
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
