@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bg0gjlojdhjwg"]
 
-[ext_resource type="Script" uid="uid://cnb1cakqlcf7m" path="res://scripts/victory_screen.gd" id="1_6e1uj"]
+[ext_resource type="Script" uid="uid://cnb1cakqlcf7m" path="res://scripts/end_screen.gd" id="1_6e1uj"]
 [ext_resource type="FontFile" uid="uid://d05mc8jb0v4b0" path="res://assets/original/fonts/Cancun Regular.ttf" id="2_jc7ji"]
 
 [node name="VictoryLayer" type="CanvasLayer" node_paths=PackedStringArray("canvas_modulate", "message_label")]

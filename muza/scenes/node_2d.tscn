@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://du4qyx2w6s2ae"]
+[gd_scene load_steps=3 format=3 uid="uid://0whhxpr1l1cr"]
 
 [ext_resource type="Texture2D" uid="uid://yvf2iqghqfyt" path="res://assets/original/level1-1.jpg" id="1_6e84v"]
 [ext_resource type="Curve2D" uid="uid://q7f4t0xavpa1" path="res://resources/curves/level1-1.tres" id="2_4dvvg"]

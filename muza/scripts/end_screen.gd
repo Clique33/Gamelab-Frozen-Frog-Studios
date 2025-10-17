@@ -12,13 +12,13 @@ class_name EndScreen
 var _enable_go_back : bool = false
 
 func transition_to_screen():
+	visible = true
 	var tween : Tween = create_tween()
 	tween.tween_property(canvas_modulate,"color",Color(1.0, 1.0, 1.0, 1.0),transition_duration)
 	tween.connect("finished",show_screen)
 	
 func show_screen():
 	var tween : Tween = create_tween()
-	print(message_label.text)
 	tween.tween_property(message_label,"visible_characters",20,text_duration)
 	tween.connect("finished",enable_go_back)
 	

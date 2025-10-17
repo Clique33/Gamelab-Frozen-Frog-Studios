@@ -26,10 +26,12 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	look_at(get_global_mouse_position())
-	if Input.is_action_just_released("swap_balls"):
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_released("swap_balls"):
 		swap_balls()
-	if shot_cooldown_timer.is_stopped() and Input.is_action_just_released("shoot"):
-		shoot(get_global_mouse_position())
+	if event.is_action_released("shoot") and shot_cooldown_timer.is_stopped():
+			shoot(get_global_mouse_position())
 
 func give_ball(from_node : Node, to_node : Node) -> void:
 	var ball : Ball = from_node.get_child(0)

@@ -1,7 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://boa5actufjfxd"]
+[gd_scene load_steps=12 format=3 uid="uid://boa5actufjfxd"]
 
 [ext_resource type="Script" uid="uid://sh1ci7fjveo3" path="res://scripts/menu_inicial.gd" id="1_1lqws"]
 [ext_resource type="Texture2D" uid="uid://cpckp7vy85qem" path="res://assets/original/menu.png" id="1_40mju"]
+[ext_resource type="Script" uid="uid://bfhtx6i4jiq5q" path="res://resources/visual_effects/fade_out_component.gd" id="2_bqqt6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ln24"]
+atlas = ExtResource("1_40mju")
+region = Rect2(0, 720, 1280, 720)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1lqws"]
 atlas = ExtResource("1_40mju")
@@ -34,7 +39,11 @@ region = Rect2(3098.87, 1228.8, 178.512, 203.306)
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_1lqws")
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
+[node name="FadeOutComponent" type="Node" parent="."]
+script = ExtResource("2_bqqt6")
+duration = 1.0
+duration_to_wait_after_fade = 0.5
+metadata/_custom_type_script = "uid://bfhtx6i4jiq5q"
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -42,13 +51,13 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ColorRect" type="ColorRect" parent="Control"]
+[node name="Sky" type="TextureRect" parent="Control"]
 layout_mode = 0
-offset_right = 1280.0
-offset_bottom = 720.0
-color = Color(0.709804, 0.372549, 0.537255, 0.572549)
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("AtlasTexture_8ln24")
 
-[node name="TextureRect" type="TextureRect" parent="Control"]
+[node name="BackGround" type="TextureRect" parent="Control"]
 layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
@@ -74,5 +83,6 @@ texture_normal = SubResource("AtlasTexture_ekxnf")
 texture_pressed = SubResource("AtlasTexture_bqqt6")
 texture_hover = SubResource("AtlasTexture_wu84c")
 
+[connection signal="fade_out_finished" from="FadeOutComponent" to="." method="transition_to_game"]
 [connection signal="pressed" from="Control/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="Control/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
