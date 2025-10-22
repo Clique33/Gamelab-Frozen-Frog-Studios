@@ -62,9 +62,9 @@ func _process(delta: float) -> void:
 	update_last_connected_indexes()
 	move_last_ball(delta)
 	move_initial_connected_balls()
-	update_last_connected_indexes()
 	fix_positions_of_balls()
-	#move_back_combo(delta)
+	update_last_connected_indexes()
+	move_back_combo(delta)
 	for i in range(1,len(_biggest_connected_ball_indexes)):
 		move_initial_connected_balls(i,false)
 
@@ -109,7 +109,7 @@ func move_last_ball(delta : float, index_last_ball : int = -1, forward : bool = 
 	if forward:
 		path_follow.progress += _current_speed*delta
 	else:
-		path_follow.progress -= _current_speed*3*delta
+		path_follow.progress -= _current_speed*8*delta
 	if  path_follow.progress_ratio == 1.0:
 		handle_ball_reached_the_end(path_follow)
 	
@@ -170,27 +170,45 @@ func move_initial_connected_balls(index : int = 0, forward : bool = true):
 		_can_spawn = true
 
 func update_last_connected_indexes(end_index : int = (len(path.get_children())-1)) -> void:
-	if end_index == (len(path.get_children())-1):
+	if end_index == path.get_child_count()-1:
+		#print("----at %d----" % end_index)
+		#print("_biggest_connected_ball_indexes : ",_biggest_connected_ball_indexes)
+		#print("_previously_biggest_connected_ball_indexes : ",_previously_biggest_connected_ball_indexes)
+		
 		_previously_biggest_connected_ball_indexes =_biggest_connected_ball_indexes.duplicate()
 		_biggest_connected_ball_indexes = []
+			
 	for i in range(end_index,0,-1):
 		if (path.get_child(i-1).progress - path.get_child(i).progress) > spacing_between_spawn*1.02:
 			_biggest_connected_ball_indexes.append(i)
-			update_last_connected_indexes(i-1)
-			return
+			#print("----before----")
+			#print("_biggest_connected_ball_indexes : ",_biggest_connected_ball_indexes)
+			#print("_previously_biggest_connected_ball_indexes : ",_previously_biggest_connected_ball_indexes)
+			#update_last_connected_indexes(i-1)
+			#print("----after----")
+			#if _previously_biggest_connected_ball_indexes != _previously_biggest_connected_ball_indexes:
+			#return
 	_biggest_connected_ball_indexes.append(0)
+	if len(_previously_biggest_connected_ball_indexes) < len(_biggest_connected_ball_indexes):
+		print("------disconnected at " , get_difference(), "-------")
+	if len(_previously_biggest_connected_ball_indexes) > len(_biggest_connected_ball_indexes):
+		var index_of_connected_ball : int = get_difference(true)[0]
+		print("------connected at " , index_of_connected_ball, "-------")
+		_on_ball_positioned(path.get_child(index_of_connected_ball).get_child(0))
+
+func get_difference(invert : bool = false):
+	print("_biggest_connected_ball_indexes : ",_biggest_connected_ball_indexes)
+	print("_previously_biggest_connected_ball_indexes : ",_previously_biggest_connected_ball_indexes)
+	var base = _biggest_connected_ball_indexes
+	var compared = _previously_biggest_connected_ball_indexes
+	if invert:
+		base = _previously_biggest_connected_ball_indexes
+		compared = _biggest_connected_ball_indexes
 	
-	if _previously_biggest_connected_ball_indexes != _previously_biggest_connected_ball_indexes:
-		print("_biggest_connected_ball_indexes : ",_biggest_connected_ball_indexes)
-		print("_previously_biggest_connected_ball_indexes : ",_previously_biggest_connected_ball_indexes)
-		
-	for index in _biggest_connected_ball_indexes:
-		if index in _previously_biggest_connected_ball_indexes:
-			_previously_biggest_connected_ball_indexes.erase(index)
-	
-	if not _previously_biggest_connected_ball_indexes.is_empty():
-		_on_ball_positioned(path.get_child(0).get_child(0))
-	
+	var temp = base.duplicate()
+	for index in compared:
+		temp.erase(index)
+	return temp
 
 func end_of_level():
 	speed = end_of_level_speed
