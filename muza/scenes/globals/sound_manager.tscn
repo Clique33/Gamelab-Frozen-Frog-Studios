@@ -5,4 +5,4 @@
 [node name="SoundManager" type="AudioStreamPlayer2D"]
 stream = ExtResource("1_5eifr")
 autoplay = true
-stream_paused = true
+parameters/looping = true

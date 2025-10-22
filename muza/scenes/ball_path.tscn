@@ -50,6 +50,10 @@ metadata/_custom_type_script = "uid://es56jq0esbp8"
 [node name="BeginOfLevelTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="ComboTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
 [node name="SoundEffects" type="Node" parent="."]
 
 [node name="BallHit1Player" type="AudioStreamPlayer2D" parent="SoundEffects"]
@@ -59,3 +63,4 @@ stream = ExtResource("5_7wwwp")
 stream = ExtResource("6_fymlj")
 
 [connection signal="timeout" from="BeginOfLevelTimer" to="." method="_on_begin_of_level_timer_timeout"]
+[connection signal="timeout" from="ComboTimer" to="." method="_on_combo_timer_timeout"]
