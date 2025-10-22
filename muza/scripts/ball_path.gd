@@ -244,8 +244,10 @@ func put_ball_on_path(new_ball : Ball, after_ball : Ball) -> void:
 			after_ball.get_parent().progress
 		)
 	)
+	for i in range(get_biggest_index_smaller_than(after_ball.get_parent().get_index()),after_ball.get_parent().get_index()+1):
+		path.get_child(i).progress += spacing_between_spawn
 	put_ball_on_path_follow(new_ball, path_follow_for_spawned_ball)
-	print(ghost_path.get_children())
+
 	ghost_path.get_child(0).progress = after_ball.get_parent().progress
 	position_ball_on_path(new_ball, ghost_path.get_child(0).get_child(0).global_position)
 
@@ -286,3 +288,9 @@ func _on_ball_positioned(ball : Ball) -> void:
 	handle_destroy_balls(ball)
 	update_last_connected_indexes()
 	move_other_connected_balls()
+
+
+func get_biggest_index_smaller_than(index : int):
+	for i in len(_biggest_connected_ball_indexes):
+		if _biggest_connected_ball_indexes[i] <= index:
+			return _biggest_connected_ball_indexes[i]
