@@ -244,9 +244,9 @@ func position_ball_on_path(ball : Ball, at_position : Vector2):
 	ball.call_deferred("stop")
 	at_position = ghost_path.get_child(0).get_child(0).global_position
 	var tween : Tween = create_tween()
-	tween.tween_property(ball,"global_position",at_position,0.4)
+	tween.tween_property(ball,"global_position",at_position,0.1)
 	tween.connect("finished",ball.tween_finished_emitter)
-	create_tween().tween_property(self,"_current_speed",speed,0.4)
+	create_tween().tween_property(self,"_current_speed",speed,0.1)
 
 func put_ball_on_path(new_ball : Ball, after_ball : Ball) -> void:
 	var path_follow_for_spawned_ball : PathFollow2D
@@ -309,6 +309,11 @@ func get_biggest_index_smaller_than(index : int):
 
 
 func _on_combo_timer_timeout() -> void:
-	_on_ball_positioned(path.get_child(combo_indexes.pop_front()).get_child(0))
-	if not combo_indexes.is_empty():
-		combo_timer.start()
+	if combo_indexes.is_empty():
+		return
+	var index : int = combo_indexes.pop_front()
+	if not path.get_child(index):
+		print("Oxe at %d" % index)
+		return
+	_on_ball_positioned(path.get_child(index).get_child(0))
+	combo_indexes.clear()
