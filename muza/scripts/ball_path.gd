@@ -171,34 +171,24 @@ func move_initial_connected_balls(index : int = 0, forward : bool = true):
 
 func update_last_connected_indexes(end_index : int = (len(path.get_children())-1)) -> void:
 	if end_index == path.get_child_count()-1:
-		#print("----at %d----" % end_index)
-		#print("_biggest_connected_ball_indexes : ",_biggest_connected_ball_indexes)
-		#print("_previously_biggest_connected_ball_indexes : ",_previously_biggest_connected_ball_indexes)
-		
 		_previously_biggest_connected_ball_indexes =_biggest_connected_ball_indexes.duplicate()
 		_biggest_connected_ball_indexes = []
 			
 	for i in range(end_index,0,-1):
 		if (path.get_child(i-1).progress - path.get_child(i).progress) > spacing_between_spawn*1.02:
 			_biggest_connected_ball_indexes.append(i)
-			#print("----before----")
-			#print("_biggest_connected_ball_indexes : ",_biggest_connected_ball_indexes)
-			#print("_previously_biggest_connected_ball_indexes : ",_previously_biggest_connected_ball_indexes)
-			#update_last_connected_indexes(i-1)
-			#print("----after----")
-			#if _previously_biggest_connected_ball_indexes != _previously_biggest_connected_ball_indexes:
-			#return
 	_biggest_connected_ball_indexes.append(0)
-	if len(_previously_biggest_connected_ball_indexes) < len(_biggest_connected_ball_indexes):
-		print("------disconnected at " , get_difference(), "-------")
+	
+	handled_reconnection()
+
+func handled_reconnection():
 	if len(_previously_biggest_connected_ball_indexes) > len(_biggest_connected_ball_indexes):
 		var index_of_connected_ball : int = get_difference(true)[0]
-		print("------connected at " , index_of_connected_ball, "-------")
+		if  index_of_connected_ball == path.get_child_count()-1:
+			return
 		_on_ball_positioned(path.get_child(index_of_connected_ball).get_child(0))
 
 func get_difference(invert : bool = false):
-	print("_biggest_connected_ball_indexes : ",_biggest_connected_ball_indexes)
-	print("_previously_biggest_connected_ball_indexes : ",_previously_biggest_connected_ball_indexes)
 	var base = _biggest_connected_ball_indexes
 	var compared = _previously_biggest_connected_ball_indexes
 	if invert:
