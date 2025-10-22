@@ -13,7 +13,8 @@ config_version=5
 config/name="MuZa"
 run/main_scene="uid://boa5actufjfxd"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://u22rkn4p2vg1"
+config/windows_native_icon="res://assets/zuma.ico"
 
 [autoload]
 
