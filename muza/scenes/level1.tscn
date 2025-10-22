@@ -44,7 +44,7 @@ max_number_of_spawned_balls = 50
 
 [node name="Frog" parent="." instance=ExtResource("2_nd71p")]
 position = Vector2(648, 343)
-shot_cooldown = 0.2
+shot_cooldown = 0.1
 
 [node name="HUDLayer" parent="." instance=ExtResource("6_d3jkd")]
 

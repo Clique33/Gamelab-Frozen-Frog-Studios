@@ -1,17 +1,6 @@
 extends Node2D
 class_name BallPath
 
-@onready var ball_spawner: BallSpawner = $BallSpawner
-@onready var path: Path2D = $Path
-@onready var begining_checker: Area2D = $BeginingChecker
-@onready var ball_checker: BallChecker = $BallChecker
-@onready var begin_of_level_timer: Timer = $BeginOfLevelTimer
-@onready var ball_hit_1_player: AudioStreamPlayer2D = $SoundEffects/BallHit1Player
-@onready var ball_hit_2_player: AudioStreamPlayer2D = $SoundEffects/BallHit2Player
-@onready var level_begin_chant_audio_player: AudioStreamPlayer2D = $"../SoundEffects/LevelBeginChantAudioPlayer"
-@onready var level_begin_rolling_audio_player: AudioStreamPlayer2D = $"../SoundEffects/LevelBeginRollingAudioPlayer"
-@onready var balls_destroyed_audio_player: AudioStreamPlayer2D = $"../SoundEffects/BallsDestroyedAudioPlayer"
-
 signal spawned_ball
 
 @export var curve : Curve2D
@@ -39,6 +28,19 @@ var _number_of_spawned_balls : int = 0
 var _previously_biggest_connected_ball_indexes : Array[int]
 var _ball_hit_players : Array[AudioStreamPlayer2D]
 
+@onready var ball_spawner: BallSpawner = $BallSpawner
+@onready var path: Path2D = $Path
+@onready var ghost_path: Path2D = $GhostPath
+@onready var begining_checker: Area2D = $BeginingChecker
+@onready var ball_checker: BallChecker = $BallChecker
+@onready var begin_of_level_timer: Timer = $BeginOfLevelTimer
+@onready var ball_hit_1_player: AudioStreamPlayer2D = $SoundEffects/BallHit1Player
+@onready var ball_hit_2_player: AudioStreamPlayer2D = $SoundEffects/BallHit2Player
+@onready var level_begin_chant_audio_player: AudioStreamPlayer2D = $"../SoundEffects/LevelBeginChantAudioPlayer"
+@onready var level_begin_rolling_audio_player: AudioStreamPlayer2D = $"../SoundEffects/LevelBeginRollingAudioPlayer"
+@onready var balls_destroyed_audio_player: AudioStreamPlayer2D = $"../SoundEffects/BallsDestroyedAudioPlayer"
+
+
 func _ready() -> void:
 	level_begin_chant_audio_player.play()
 	level_begin_rolling_audio_player.play()
@@ -49,6 +51,8 @@ func _ready() -> void:
 	ball_checker.spacing_between_balls = spacing_between_spawn
 	begining_checker.position = path.curve.get_baked_points()[0]
 	_current_speed = begin_of_level_speed
+	ghost_path.curve = curve
+	spawn_ball_at_ghost_path()
 
 func _process(delta: float) -> void:
 	update_progress_towards_defeat()
@@ -59,9 +63,23 @@ func _process(delta: float) -> void:
 	move_last_ball(delta)
 	move_initial_connected_balls()
 	update_last_connected_indexes()
+	fix_positions_of_balls()
 	move_back_combo(delta)
 	for i in range(1,len(_biggest_connected_ball_indexes)):
 		move_initial_connected_balls(i,false)
+
+
+func fix_positions_of_balls():
+	pass
+
+
+func spawn_ball_at_ghost_path():
+	var path_follow_for_spawned_ball : PathFollow2D = create_new_path_follow(-1,0,ghost_path)
+	var new_ball : Ball = ball_spawner.spawn(500,-PI/2)
+	new_ball.color = Ball.Colors.SILVER
+	path_follow_for_spawned_ball.add_child.call_deferred(new_ball)
+	new_ball.set_deferred("global_position",path.curve.get_baked_points()[0])
+
 
 func check_if_won() -> bool:
 	if _game_is_winnable and (not _level_lost) and path.get_child_count() == 0:
@@ -176,7 +194,7 @@ func update_last_connected_indexes(end_index : int = (len(path.get_children())-1
 func end_of_level():
 	speed = end_of_level_speed
 
-func create_new_path_follow(after_index : int = -1, progress : float = 0):
+func create_new_path_follow(after_index : int = -1, progress : float = 0, path : Path2D = self.path):
 	
 	var path_follow : PathFollow2D = PathFollow2D.new()
 	path_follow.connect("child_entered_tree",_on_ball_entered_tree)
@@ -211,6 +229,7 @@ func position_ball_on_path(ball : Ball, at_position : Vector2):
 	var curr_global_position : Vector2 = ball.global_position
 	ball.set_deferred("global_position",curr_global_position)
 	ball.call_deferred("stop")
+	at_position = ghost_path.get_child(0).get_child(0).global_position
 	var tween : Tween = create_tween()
 	tween.tween_property(ball,"global_position",at_position,0.4)
 	tween.connect("finished",ball.tween_finished_emitter)
@@ -225,7 +244,9 @@ func put_ball_on_path(new_ball : Ball, after_ball : Ball) -> void:
 		)
 	)
 	put_ball_on_path_follow(new_ball, path_follow_for_spawned_ball)
-	position_ball_on_path(new_ball, after_ball.global_position)
+	print(ghost_path.get_children())
+	ghost_path.get_child(0).progress = after_ball.get_parent().progress
+	position_ball_on_path(new_ball, ghost_path.get_child(0).get_child(0).global_position)
 
 func handle_destroy_balls(ball : Ball):
 	var min_max = (ball_checker.indexes_of_same_color_cluster(ball.get_parent().get_index()))
