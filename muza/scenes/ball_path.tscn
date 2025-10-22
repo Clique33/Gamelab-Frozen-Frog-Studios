@@ -31,6 +31,7 @@ spacing_between_spawn = 25.0
 curve = SubResource("Curve2D_hdgg0")
 
 [node name="GhostPath" type="Path2D" parent="."]
+visible = false
 curve = SubResource("Curve2D_7wwwp")
 
 [node name="BeginingChecker" type="Area2D" parent="."]

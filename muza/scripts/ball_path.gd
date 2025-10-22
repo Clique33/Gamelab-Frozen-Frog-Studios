@@ -64,14 +64,15 @@ func _process(delta: float) -> void:
 	move_initial_connected_balls()
 	update_last_connected_indexes()
 	fix_positions_of_balls()
-	move_back_combo(delta)
+	#move_back_combo(delta)
 	for i in range(1,len(_biggest_connected_ball_indexes)):
 		move_initial_connected_balls(i,false)
 
 
 func fix_positions_of_balls():
-	pass
-
+	for path_follow in path.get_children():
+		ghost_path.get_child(0).progress = path_follow.progress
+		path_follow.get_child(0).global_position = ghost_path.get_child(0).get_child(0).global_position
 
 func spawn_ball_at_ghost_path():
 	var path_follow_for_spawned_ball : PathFollow2D = create_new_path_follow(-1,0,ghost_path)
