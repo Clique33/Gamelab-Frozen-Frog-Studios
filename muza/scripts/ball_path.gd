@@ -17,6 +17,7 @@ signal spawned_ball
 @export var spacing_between_spawn : float = 10
 @export var max_number_of_spawned_balls : int = 100 
 
+var combo_indexes : Array[int] = []
 var biggest_progress : float = 0
 var number_of_balls_in_path : int = 0
 var _can_spawn : bool = true
@@ -34,6 +35,7 @@ var _ball_hit_players : Array[AudioStreamPlayer2D]
 @onready var begining_checker: Area2D = $BeginingChecker
 @onready var ball_checker: BallChecker = $BallChecker
 @onready var begin_of_level_timer: Timer = $BeginOfLevelTimer
+@onready var combo_timer: Timer = $ComboTimer
 @onready var ball_hit_1_player: AudioStreamPlayer2D = $SoundEffects/BallHit1Player
 @onready var ball_hit_2_player: AudioStreamPlayer2D = $SoundEffects/BallHit2Player
 @onready var level_begin_chant_audio_player: AudioStreamPlayer2D = $"../SoundEffects/LevelBeginChantAudioPlayer"
@@ -186,8 +188,10 @@ func handled_reconnection():
 		var index_of_connected_ball : int = get_difference(true)[0]
 		if  index_of_connected_ball == path.get_child_count()-1:
 			return
-		_on_ball_positioned(path.get_child(index_of_connected_ball).get_child(0))
-
+		combo_indexes.append(index_of_connected_ball)
+		if combo_timer.is_stopped():
+			combo_timer.start()
+		
 func get_difference(invert : bool = false):
 	var base = _biggest_connected_ball_indexes
 	var compared = _previously_biggest_connected_ball_indexes
@@ -302,3 +306,9 @@ func get_biggest_index_smaller_than(index : int):
 	for i in len(_biggest_connected_ball_indexes):
 		if _biggest_connected_ball_indexes[i] <= index:
 			return _biggest_connected_ball_indexes[i]
+
+
+func _on_combo_timer_timeout() -> void:
+	_on_ball_positioned(path.get_child(combo_indexes.pop_front()).get_child(0))
+	if not combo_indexes.is_empty():
+		combo_timer.start()
