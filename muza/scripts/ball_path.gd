@@ -312,7 +312,7 @@ func _on_combo_timer_timeout() -> void:
 	if combo_indexes.is_empty():
 		return
 	var index : int = combo_indexes.pop_front()
-	if not path.get_child(index):
+	if index >= path.get_child_count():
 		print("Oxe at %d" % index)
 		return
 	_on_ball_positioned(path.get_child(index).get_child(0))

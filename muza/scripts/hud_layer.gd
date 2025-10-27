@@ -3,10 +3,10 @@ class_name HUDLayer
 
 signal go_to_menu
 
-@onready var end_game_progress_bar: TextureProgressBar = $EndGameProgressBar
-@onready var end_game_arrived_bar: TextureRect = $EndGameArrivedBar
-@onready var end_of_level_audio_player: AudioStreamPlayer2D = $SoudEffects/EndOfLevelAudioPlayer
-@onready var button_pressed_audio_player: AudioStreamPlayer2D = $SoudEffects/ButtonPressedAudioPlayer
+@onready var end_game_progress_bar: TextureProgressBar = $Control/EndGameProgressBar
+@onready var end_game_arrived_bar: TextureRect = $Control/EndGameArrivedBar
+@onready var end_of_level_audio_player: AudioStreamPlayer2D = $Control/SoudEffects/EndOfLevelAudioPlayer
+@onready var button_pressed_audio_player: AudioStreamPlayer2D = $Control/SoudEffects/ButtonPressedAudioPlayer
 
 @export var total_number_of_balls : int = 100:
 	set(value):

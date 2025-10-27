@@ -33,5 +33,5 @@ func enable_go_back():
 func _input(event: InputEvent) -> void:
 	if not _enable_go_back:
 		return
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("shoot"):
 		get_tree().change_scene_to_packed(main_menu)
