@@ -1,7 +1,7 @@
 extends Node
 class_name FadeOutComponent
 
-signal fade_out_finished
+#signal fade_out_finished
 
 @export var duration : float
 @export var duration_to_wait_after_fade : float

@@ -12,7 +12,7 @@ extends Node2D
 func _ready() -> void:
 	hud_layer.total_number_of_balls = ball_path.max_number_of_spawned_balls
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	end_mouth.update_mouth(ball_path.biggest_progress)
 	if ball_path.check_if_won():
 		victory_layer.transition_to_screen()

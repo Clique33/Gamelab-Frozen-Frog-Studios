@@ -3,10 +3,10 @@ class_name HUDLayer
 
 signal go_to_menu
 
-@onready var end_game_progress_bar: TextureProgressBar = $EndGameProgressBar
-@onready var end_game_arrived_bar: TextureRect = $EndGameArrivedBar
-@onready var end_of_level_audio_player: AudioStreamPlayer2D = $SoudEffects/EndOfLevelAudioPlayer
-@onready var button_pressed_audio_player: AudioStreamPlayer2D = $SoudEffects/ButtonPressedAudioPlayer
+@onready var end_game_progress_bar: TextureProgressBar = $Control/EndGameProgressBar
+@onready var end_game_arrived_bar: TextureRect = $Control/EndGameArrivedBar
+@onready var end_of_level_audio_player: AudioStreamPlayer2D = $Control/SoudEffects/EndOfLevelAudioPlayer
+@onready var button_pressed_audio_player: AudioStreamPlayer2D = $Control/SoudEffects/ButtonPressedAudioPlayer
 
 @export var total_number_of_balls : int = 100:
 	set(value):
@@ -16,7 +16,7 @@ signal go_to_menu
 func increment_progress_of_game() -> void:
 	update_progress_of_game(end_game_progress_bar.value+1)
 
-func update_progress_of_game(value : int) -> void:
+func update_progress_of_game(value : float) -> void:
 	end_game_progress_bar.value = value
 	if end_game_progress_bar.value == end_game_progress_bar.max_value:
 		end_game_progress_bar.visible = false

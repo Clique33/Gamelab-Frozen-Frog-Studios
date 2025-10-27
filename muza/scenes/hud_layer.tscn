@@ -33,12 +33,19 @@ filter_clip = true
 [node name="HUDLayer" type="CanvasLayer"]
 script = ExtResource("1_frjao")
 
-[node name="HUDBackground" type="TextureRect" parent="."]
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="HUDBackground" type="TextureRect" parent="Control"]
 offset_right = 1280.0
 offset_bottom = 720.0
 texture = SubResource("AtlasTexture_u3awl")
 
-[node name="MenuButton" type="TextureButton" parent="."]
+[node name="MenuButton" type="TextureButton" parent="Control"]
 offset_left = 1128.0
 offset_top = 3.0
 offset_right = 1246.0
@@ -47,14 +54,14 @@ texture_normal = SubResource("AtlasTexture_d3jkd")
 texture_pressed = SubResource("AtlasTexture_2ku1j")
 texture_hover = SubResource("AtlasTexture_f31uk")
 
-[node name="EndGameProgressBar" type="TextureProgressBar" parent="."]
+[node name="EndGameProgressBar" type="TextureProgressBar" parent="Control"]
 offset_left = 773.0
 offset_top = 2.0
 offset_right = 868.0
 offset_bottom = 42.0
 texture_progress = SubResource("AtlasTexture_frjao")
 
-[node name="EndGameArrivedBar" type="TextureRect" parent="."]
+[node name="EndGameArrivedBar" type="TextureRect" parent="Control"]
 visible = false
 offset_left = 768.0
 offset_top = 5.0
@@ -62,12 +69,12 @@ offset_right = 868.0
 offset_bottom = 27.0
 texture = SubResource("AtlasTexture_t62ci")
 
-[node name="SoudEffects" type="Node" parent="."]
+[node name="SoudEffects" type="Node" parent="Control"]
 
-[node name="EndOfLevelAudioPlayer" type="AudioStreamPlayer2D" parent="SoudEffects"]
+[node name="EndOfLevelAudioPlayer" type="AudioStreamPlayer2D" parent="Control/SoudEffects"]
 stream = ExtResource("3_t62ci")
 
-[node name="ButtonPressedAudioPlayer" type="AudioStreamPlayer2D" parent="SoudEffects"]
+[node name="ButtonPressedAudioPlayer" type="AudioStreamPlayer2D" parent="Control/SoudEffects"]
 stream = ExtResource("4_xqivf")
 
-[connection signal="pressed" from="MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="Control/MenuButton" to="." method="_on_menu_button_pressed"]

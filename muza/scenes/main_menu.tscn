@@ -89,6 +89,5 @@ texture_hover = SubResource("AtlasTexture_wu84c")
 [node name="ButtonPressedAudioPlayer" type="AudioStreamPlayer2D" parent="SoundEffects"]
 stream = ExtResource("4_wu84c")
 
-[connection signal="fade_out_finished" from="FadeOutComponent" to="." method="transition_to_game"]
 [connection signal="pressed" from="Control/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="Control/LeaveGameButton" to="." method="_on_leave_game_button_pressed"]
