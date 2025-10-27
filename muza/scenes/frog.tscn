@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://chnt2xhqf1y3f"]
+[gd_scene load_steps=19 format=3 uid="uid://chnt2xhqf1y3f"]
 
 [ext_resource type="Script" uid="uid://cebbd0b4cojs" path="res://scripts/frog.gd" id="1_qyo2l"]
 [ext_resource type="PackedScene" uid="uid://g7tlfbm48buo" path="res://scenes/ball_spawner.tscn" id="2_1g2vb"]
@@ -121,6 +121,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ybftx"]
+radius = 79.1581
+
 [node name="Frog" type="CharacterBody2D"]
 script = ExtResource("1_qyo2l")
 shot_speed = 700
@@ -188,3 +191,11 @@ stream = ExtResource("4_1g2vb")
 
 [node name="SwapBallsAudioPlayer" type="AudioStreamPlayer2D" parent="SoundEffects"]
 stream = ExtResource("5_ybftx")
+
+[node name="MouseEnteredArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MouseEnteredArea"]
+shape = SubResource("CircleShape2D_ybftx")
+
+[connection signal="mouse_entered" from="MouseEnteredArea" to="." method="_on_mouse_entered_area_mouse_entered"]
+[connection signal="mouse_exited" from="MouseEnteredArea" to="." method="_on_mouse_entered_area_mouse_exited"]
