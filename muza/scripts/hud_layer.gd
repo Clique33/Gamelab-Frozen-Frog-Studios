@@ -16,7 +16,7 @@ signal go_to_menu
 func increment_progress_of_game() -> void:
 	update_progress_of_game(end_game_progress_bar.value+1)
 
-func update_progress_of_game(value : int) -> void:
+func update_progress_of_game(value : float) -> void:
 	end_game_progress_bar.value = value
 	if end_game_progress_bar.value == end_game_progress_bar.max_value:
 		end_game_progress_bar.visible = false

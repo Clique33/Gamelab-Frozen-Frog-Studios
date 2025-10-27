@@ -72,10 +72,8 @@ func shoot(at_point : Vector2) -> void:
 
 
 func _on_mouse_entered_area_mouse_entered() -> void:
-	print("entered frog")
 	_is_mouse_inside_frog = true
 
 
 func _on_mouse_entered_area_mouse_exited() -> void:
-	print("exited frog")
 	_is_mouse_inside_frog = false

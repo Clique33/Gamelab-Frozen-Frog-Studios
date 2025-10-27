@@ -122,7 +122,7 @@ func move_back_combo(delta):
 		if (ball_checker.is_combo(_biggest_connected_ball_indexes[i])):
 			move_last_ball(delta,_biggest_connected_ball_indexes[i+1],false)
 
-func move_backwards(index : int, delta : float):
+func move_backwards(index : int):
 	for j in range(_biggest_connected_ball_indexes[index]-2,_biggest_connected_ball_indexes[index+1]-1,-1):
 		if (path.get_child(j-1).progress - path.get_child(j).progress) > spacing_between_spawn:
 			path.get_child(j).progress = path.get_child(j-1).progress - spacing_between_spawn
@@ -207,17 +207,17 @@ func get_difference(invert : bool = false):
 func end_of_level():
 	speed = end_of_level_speed
 
-func create_new_path_follow(after_index : int = -1, progress : float = 0, path : Path2D = self.path):
+func create_new_path_follow(after_index : int = -1, progress : float = 0, at_path : Path2D = self.path):
 	
 	var path_follow : PathFollow2D = PathFollow2D.new()
 	path_follow.connect("child_entered_tree",_on_ball_entered_tree)
 	path_follow.loop = false
 	path_follow.progress = progress
 	
-	if path.get_child_count() == 0:
-		path.add_child(path_follow)
+	if at_path.get_child_count() == 0:
+		at_path.add_child(path_follow)
 	else:
-		path.get_child(after_index).add_sibling(path_follow)
+		at_path.get_child(after_index).add_sibling(path_follow)
 	return path_follow
 
 func spawn_ball_at_begining():

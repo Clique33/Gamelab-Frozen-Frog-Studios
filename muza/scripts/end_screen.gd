@@ -30,7 +30,7 @@ func show_screen():
 func enable_go_back():
 	_enable_go_back = true
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if not _enable_go_back:
 		return
 	if Input.is_action_just_pressed("shoot"):
